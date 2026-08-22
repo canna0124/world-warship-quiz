@@ -83,3 +83,21 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:300px;
   }
 }
+
+
+/* v3.7 WoWS medium images */
+.image-card img.wows-medium{
+  width:auto;
+  height:auto;
+  max-width:min(86%,900px);
+  max-height:520px;
+  object-fit:contain;
+  image-rendering:auto;
+  filter:contrast(1.03) saturate(1.03);
+}
+@media(max-width:650px){
+  .image-card img.wows-medium{
+    max-width:94%;
+    max-height:340px;
+  }
+}
