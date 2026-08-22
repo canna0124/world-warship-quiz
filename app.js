@@ -1,6 +1,20 @@
 
-const WOWS_API = "https://wiki.worldofwarships.com/api.php";
-const KANCOLLE_API = "https://en.kancollewiki.net/w/api.php";
+const WOWS_API = "https://wiki.worldofwarships.com/api.php"; // 旧方式の互換用
+const KANCOLLE_API = "https://en.kancollewiki.net/w/api.php"; // 旧方式の互換用
+
+const KANCOLLE_MASTER_URL =
+  "https://raw.githubusercontent.com/Nishisonic/gkcoi/master/static/START2.json";
+const KANCOLLE_IMAGE_BASE =
+  "https://raw.githubusercontent.com/Nishisonic/gkcoi/master/static/ship/card";
+const KANCOLLE_SOURCE_URL =
+  "https://github.com/Nishisonic/gkcoi";
+
+const WOWS_DATA_URL =
+  "https://raw.githubusercontent.com/wowsinfo/data/master/live/app/data/wowsinfo.json";
+const WOWS_IMAGE_BASE =
+  "https://raw.githubusercontent.com/wowsinfo/data/master/live/app/assets/ships";
+const WOWS_SOURCE_URL =
+  "https://github.com/wowsinfo/data";
 const WOWS_NATIONS = [
   "U.S.A.","Japan","U.K.","Germany","U.S.S.R.","France","Italy",
   "Pan-Asia","Europe","Commonwealth","Pan-America","Netherlands","Spain","Poland"
@@ -145,7 +159,7 @@ async function onModeChange(){
     if(modeData.wows.length){
       setStatus(`WoWS ${modeData.wows.length}隻を使用可能`);
     }else{
-      setStatus("WoWSは必要な国だけ先に高速取得します。残りはプレイ中に自動取得します");
+      setStatus("WoWSはGitHubの静的艦艇データを使用します。初回だけ数秒かかる場合があります");
     }
   }
 }
@@ -163,198 +177,285 @@ function cacheSet(key,data){
 
 async function loadKancolleData(){
   if(modeData.kancolle.length) return modeData.kancolle;
-  const cached=cacheGet("warshipQuizV3:kancolle",7*24*3600*1000);
-  if(cached?.length){ modeData.kancolle=cached; return cached; }
 
-  setStatus("艦これWikiから艦娘一覧を読み込み中…",true);
-  try{
-    const url=`${KANCOLLE_API}?action=parse&page=Ship_list&prop=text&format=json&formatversion=2&origin=*`;
-    const data=await fetch(url).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
-    const doc=new DOMParser().parseFromString(data.parse.text,"text/html");
-    const rows=[...doc.querySelectorAll("table.wikitable tr")];
-    const list=[];
-
-    for(const tr of rows){
-      const td=[...tr.querySelectorAll("td")];
-      if(td.length<4) continue;
-      const no=(td[0].textContent||"").trim();
-      if(!/^\d+$/.test(no)) continue;
-
-      const html=(td[1].innerHTML||"").replace(/<br\s*\/?>/gi,"\n");
-      const tmp=document.createElement("div"); tmp.innerHTML=html;
-      let lines=(tmp.textContent||"").split(/\n+/).map(x=>x.trim()).filter(Boolean);
-      if(lines.length<2){
-        // Some table markup collapses line breaks; use anchor text + Japanese text fallback.
-        const a=td[1].querySelector("a");
-        const en=(a?.textContent||"").trim();
-        const full=(td[1].textContent||"").trim();
-        let jp=full.replace(en,"").trim();
-        if(en && jp) lines=[en,jp];
-      }
-      if(!lines.length) continue;
-      const en=lines[0];
-      const jp=lines[1]||en;
-      if(!en || !jp) continue;
-
-      const cls=(td[2].textContent||"").replace(/\s+/g," ").trim();
-      const typ=(td[3].textContent||"").replace(/\s+/g," ").trim();
-      const isBase = !/(Kai|Zwei|Drei|Due|Mk\.?\s?II|Mod\.?\s?2|改|甲|乙|丙|丁)/i.test(`${en} ${jp}`);
-      list.push({
-        id:`kc:${no}`,mode:"kancolle",no,en,jp,name:jp,displayName:jp,
-        aliases:[jp,en],className:cls,type:typ,isBase,
-        source:`https://en.kancollewiki.net/${encodeURIComponent(en.replaceAll(" ","_"))}`,
-        meta:`艦これ No.${no} ｜ ${typ || "艦娘"}${cls?` ｜ ${cls}`:""}`,
-        desc:`${jp}（${en}）`
-      });
-    }
-    const unique=[...new Map(list.map(x=>[x.id,x])).values()];
-    if(unique.length<100) throw new Error("parsed too few ships");
-    modeData.kancolle=unique;
-    cacheSet("warshipQuizV3:kancolle",unique);
-    setStatus(`艦これ ${unique.length}形態を読み込みました`);
-    return unique;
-  }catch(err){
-    console.warn("Kancolle live list failed, using fallback",err);
-    const fb=kancolleFallback.map((s,i)=>({
-      id:`kcf:${i}:${s.en}`,mode:"kancolle",name:s.jp,displayName:s.jp,jp:s.jp,en:s.en,
-      aliases:[s.jp,s.en],type:s.type,isBase:true,source:s.source,
-      meta:`艦これ ｜ ${s.type}`,desc:`${s.jp}（${s.en}）`
-    }));
-    modeData.kancolle=fb;
-    setStatus(`艦これ内蔵リスト ${fb.length}隻を使用（オンライン一覧の取得に失敗）`);
-    return fb;
-  }finally{
-    $("startBtn").disabled=false;
-  }
-}
-
-async function fetchCategoryMembers(category){
-  let result=[], cont="";
-  do{
-    const p=new URLSearchParams({
-      action:"query",list:"categorymembers",cmtitle:`Category:${category}`,
-      cmlimit:"500",cmnamespace:"0",format:"json",origin:"*"
-    });
-    if(cont) p.set("cmcontinue",cont);
-    const data=await fetch(`${WOWS_API}?${p}`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
-    result=result.concat(data.query?.categorymembers||[]);
-    cont=data.continue?.cmcontinue||"";
-  }while(cont);
-  return result;
-}
-
-async function loadWowsNation(nation, quiet=false){
-  const memory = modeData.wows.filter(s=>s.nation===nation);
-  if(memory.length) return memory;
-
-  const key=`warshipQuizV32:wows:${nation}`;
-  const cached=cacheGet(key,7*24*3600*1000);
+  const cached=cacheGet("warshipQuizV33:kancolle",7*24*3600*1000);
   if(cached?.length){
-    modeData.wows=[...new Map([...modeData.wows,...cached].map(x=>[x.id,x])).values()];
+    modeData.kancolle=cached;
+    setStatus(`艦これ ${cached.length}形態を使用可能`);
     return cached;
   }
 
-  if(!quiet) setStatus(`WoWS「${nation}」の艦艇一覧を読み込み中…`,true);
+  setStatus("艦これデータを読み込み中…",true);
+  $("startBtn").textContent="読み込み中…";
 
-  const members=await fetchCategoryMembers(`Ships of ${nation}`);
-  const list=members
-    .filter(m=>m.title?.startsWith("Ship:"))
-    .map(m=>{
-      const name=m.title.slice(5);
-      return {
-        id:`wows:${nation}:${name}`,mode:"wows",name,displayName:name,nation,
-        aliases:[name],pageTitle:m.title,
-        source:`https://wiki.worldofwarships.com/${encodeURIComponent(m.title.replaceAll(" ","_"))}`,
-        meta:`World of Warships ｜ ${nation}`,
-        desc:`WoWS公式Wiki掲載艦艇：${name}`
-      };
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),25000);
+    const res=await fetch(KANCOLLE_MASTER_URL,{
+      signal:controller.signal,
+      cache:"force-cache"
     });
+    clearTimeout(timer);
+    if(!res.ok) throw new Error(`START2 HTTP ${res.status}`);
 
-  if(!list.length) throw new Error(`${nation} の艦艇一覧を取得できませんでした。`);
+    const raw=await res.json();
+    const master=raw.api_data || raw;
+    const ships=Array.isArray(master.api_mst_ship) ? master.api_mst_ship : [];
+    const stypes=Array.isArray(master.api_mst_stype) ? master.api_mst_stype : [];
 
-  cacheSet(key,list);
-  modeData.wows=[...new Map([...modeData.wows,...list].map(x=>[x.id,x])).values()];
-  return list;
+    if(ships.length<100) throw new Error("艦娘マスターデータが少なすぎます");
+
+    const stypeMap=new Map(
+      stypes.map(x=>[Number(x.api_id),x.api_name||`艦種${x.api_id}`])
+    );
+
+    const remodelTargets=new Set();
+    for(const s of ships){
+      const after=Number(s.api_aftershipid);
+      if(Number.isFinite(after) && after>0) remodelTargets.add(after);
+    }
+
+    const fallbackByName=new Map(kancolleFallback.map(x=>[x.jp,x]));
+
+    const list=ships
+      .filter(s=>{
+        const id=Number(s.api_id);
+        const name=(s.api_name||"").trim();
+        return Number.isFinite(id) && id>0 && id<1500 && name && name!=="なし";
+      })
+      .map(s=>{
+        const id=Number(s.api_id);
+        const jp=(s.api_name||"").trim();
+        const yomi=(s.api_yomi||"").trim();
+        const type=stypeMap.get(Number(s.api_stype)) || "艦娘";
+        const fallback=fallbackByName.get(jp);
+        const aliases=[jp];
+        if(yomi && yomi!==jp) aliases.push(yomi);
+        if(fallback?.en) aliases.push(fallback.en);
+
+        return {
+          id:`kc:${id}`,
+          mode:"kancolle",
+          kcId:id,
+          jp,
+          en:fallback?.en||"",
+          name:jp,
+          displayName:jp,
+          aliases:[...new Set(aliases.filter(Boolean))],
+          type,
+          isBase:!remodelTargets.has(id),
+          imageUrl:`${KANCOLLE_IMAGE_BASE}/${id}.png`,
+          source:KANCOLLE_SOURCE_URL,
+          meta:`艦これ No.${id} ｜ ${type}`,
+          desc:fallback?.en ? `${jp}（${fallback.en}）` : jp
+        };
+      });
+
+    if(list.length<100) throw new Error("艦これデータの解析に失敗しました");
+
+    modeData.kancolle=list;
+    cacheSet("warshipQuizV33:kancolle",list);
+    setStatus(`艦これ ${list.length}形態を読み込みました`);
+    return list;
+
+  }catch(err){
+    console.warn("Kancolle START2 load failed, using fallback",err);
+
+    const fb=kancolleFallback.map((s,i)=>({
+      id:`kcf:${i}:${s.en}`,
+      mode:"kancolle",
+      name:s.jp,
+      displayName:s.jp,
+      jp:s.jp,
+      en:s.en,
+      aliases:[s.jp,s.en].filter(Boolean),
+      type:s.type,
+      isBase:true,
+      source:KANCOLLE_SOURCE_URL,
+      meta:`艦これ ｜ ${s.type}`,
+      desc:`${s.jp}（${s.en}）`
+    }));
+    modeData.kancolle=fb;
+    setStatus(`艦これ内蔵リスト ${fb.length}隻を使用（画像マスター取得に失敗）`);
+    return fb;
+  }finally{
+    $("startBtn").disabled=false;
+    $("startBtn").textContent="クイズ開始";
+  }
 }
 
-function cachedWowsNations(){
-  return WOWS_NATIONS.filter(n=>{
-    if(modeData.wows.some(s=>s.nation===n)) return true;
-    return !!cacheGet(`warshipQuizV32:wows:${n}`,7*24*3600*1000)?.length;
-  });
+function wowsRegionLabel(region){
+  const map={
+    usa:"U.S.A.",
+    japan:"Japan",
+    uk:"U.K.",
+    germany:"Germany",
+    ussr:"U.S.S.R.",
+    france:"France",
+    italy:"Italy",
+    pan_asia:"Pan-Asia",
+    europe:"Europe",
+    commonwealth:"Commonwealth",
+    pan_america:"Pan-America",
+    netherlands:"Netherlands",
+    spain:"Spain",
+    poland:"Poland"
+  };
+  return map[String(region||"").toLowerCase()] || String(region||"Other");
+}
+
+function parseWowsStaticData(root){
+  const ships=[];
+  const enLang={};
+  const jaLang={};
+  const genericLang={};
+
+  const stack=[{value:root,lang:null}];
+  const seen=new WeakSet();
+
+  while(stack.length){
+    const {value,lang}=stack.pop();
+    if(!value || typeof value!=="object") continue;
+    if(seen.has(value)) continue;
+    seen.add(value);
+
+    if(!Array.isArray(value)){
+      const index=value.index;
+      const tier=Number(value.tier);
+      const region=value.region;
+      const type=value.type;
+
+      if(
+        typeof index==="string" &&
+        /^P[A-Z]{3}\d{3}$/i.test(index) &&
+        Number.isFinite(tier) && tier>=1 && tier<=11 &&
+        typeof region==="string" &&
+        typeof type==="string"
+      ){
+        ships.push(value);
+      }
+    }
+
+    if(Array.isArray(value)){
+      for(let i=value.length-1;i>=0;i--){
+        if(value[i] && typeof value[i]==="object"){
+          stack.push({value:value[i],lang});
+        }
+      }
+      continue;
+    }
+
+    for(const [key,val] of Object.entries(value)){
+      let nextLang=lang;
+      const kl=key.toLowerCase();
+
+      if(kl==="en" || kl==="english") nextLang="en";
+      else if(kl==="ja" || kl==="jp" || kl==="japanese") nextLang="ja";
+
+      if(/^IDS_/i.test(key) && typeof val==="string"){
+        genericLang[key]=val;
+        if(lang==="en") enLang[key]=val;
+        if(lang==="ja") jaLang[key]=val;
+      }
+
+      if(val && typeof val==="object"){
+        stack.push({value:val,lang:nextLang});
+      }
+    }
+  }
+
+  const unique=[...new Map(
+    ships.map(s=>[String(s.index).toUpperCase(),s])
+  ).values()];
+
+  return unique.map(s=>{
+    const code=String(s.index).toUpperCase();
+    const nameKey=typeof s.name==="string" ? s.name : `IDS_${code}`;
+    const en=enLang[nameKey] || "";
+    const ja=jaLang[nameKey] || "";
+    let fallbackName=genericLang[nameKey] || "";
+    if(/^IDS_/i.test(fallbackName)) fallbackName="";
+
+    const displayName=ja || en || fallbackName || code;
+    const aliases=[displayName,ja,en,fallbackName,code].filter(Boolean);
+    const nation=wowsRegionLabel(s.region);
+    const shipType=jaLang[s.typeID] || enLang[s.typeID] ||
+      genericLang[s.typeID] || s.type;
+
+    return {
+      id:`wows:${code}`,
+      mode:"wows",
+      name:displayName,
+      displayName,
+      nation,
+      region:s.region,
+      tier:Number(s.tier),
+      shipType,
+      index:code,
+      aliases:[...new Set(aliases)],
+      source:WOWS_SOURCE_URL,
+      meta:`World of Warships ｜ ${nation} ｜ Tier ${s.tier} ｜ ${shipType}`,
+      desc:`WoWS艦艇：${displayName}`,
+      imageUrl:`${WOWS_IMAGE_BASE}/${code}.png`
+    };
+  }).filter(s=>s.displayName && s.index);
 }
 
 async function loadWowsPoolForQuiz(){
-  const selected=$("wowsNation").value;
-
-  // 国を指定した場合は、その国だけ1回取得するので非常に速い。
-  if(selected!=="all"){
-    try{
-      const list=await loadWowsNation(selected);
-      setStatus(`WoWS ${selected}：${list.length}隻を使用`);
-      return list;
-    }finally{
-      $("startBtn").disabled=false;
-      $("startBtn").textContent="クイズ開始";
-    }
+  if(modeData.wows.length){
+    const nation=$("wowsNation").value;
+    return modeData.wows.filter(s=>nation==="all" || s.nation===nation);
   }
 
-  // 「すべて」の場合も14か国を一度に読まない。
-  // 最初のクイズに必要な分だけ、2～4か国を先に取得して即スタートする。
-  const needNations = selectedCount>=30 ? 4 : selectedCount>=20 ? 3 : 2;
-  const shuffledNations=shuffled(WOWS_NATIONS);
-  const already=cachedWowsNations();
-  const ordered=[
-    ...shuffled(already),
-    ...shuffledNations.filter(n=>!already.includes(n))
-  ];
-  const target=ordered.slice(0,needNations);
+  const cached=cacheGet("warshipQuizV33:wowsCompact",7*24*3600*1000);
+  if(cached?.length){
+    modeData.wows=cached;
+    const nation=$("wowsNation").value;
+    const filtered=cached.filter(s=>nation==="all" || s.nation===nation);
+    setStatus(`WoWS ${cached.length}隻を使用可能`);
+    return filtered;
+  }
 
-  setStatus(`WoWSを高速読み込み中… 0 / ${target.length}か国`,true);
+  setStatus("WoWS艦艇データを読み込み中…（初回のみ約7MB）",true);
   $("startBtn").textContent="読み込み中…";
 
-  const loaded=[];
-  for(let i=0;i<target.length;i++){
-    const nation=target[i];
-    try{
-      const list=await loadWowsNation(nation,true);
-      loaded.push(...list);
-      setStatus(`WoWSを高速読み込み中… ${i+1} / ${target.length}か国（${loaded.length}隻）`,true);
-    }catch(err){
-      console.warn("WoWS nation load failed",nation,err);
+  try{
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),45000);
+
+    const res=await fetch(WOWS_DATA_URL,{
+      signal:controller.signal,
+      cache:"force-cache"
+    });
+    clearTimeout(timer);
+
+    if(!res.ok) throw new Error(`WoWS data HTTP ${res.status}`);
+
+    setStatus("WoWS艦艇データを解析中…",true);
+    const raw=await res.json();
+    const list=parseWowsStaticData(raw);
+
+    if(list.length<300){
+      console.warn("Parsed WoWS list",list);
+      throw new Error(`WoWS艦艇を十分に解析できませんでした（${list.length}隻）`);
     }
-  }
 
-  $("startBtn").disabled=false;
-  $("startBtn").textContent="クイズ開始";
+    modeData.wows=list;
+    cacheSet("warshipQuizV33:wowsCompact",list);
 
-  if(loaded.length<4){
-    throw new Error("WoWSの艦艇一覧を取得できませんでした。ネット接続を確認して、もう一度お試しください。");
-  }
+    const nation=$("wowsNation").value;
+    const filtered=list.filter(s=>nation==="all" || s.nation===nation);
+    setStatus(`WoWS ${list.length}隻を読み込みました`);
+    return filtered;
 
-  setStatus(`WoWS ${loaded.length}隻で開始します。残りの国はプレイ中にバックグラウンド取得します。`);
-
-  // クイズ開始後に残りをゆっくり取得してキャッシュ。
-  // 次回以降は「すべて」でもほぼ待たずに開始できる。
-  setTimeout(()=>backgroundLoadRemainingWows(target),1200);
-  return loaded;
-}
-
-async function backgroundLoadRemainingWows(initialNations=[]){
-  const rest=WOWS_NATIONS.filter(n=>!initialNations.includes(n) && !cachedWowsNations().includes(n));
-  let done=0;
-  for(const nation of rest){
-    try{
-      await loadWowsNation(nation,true);
-      done++;
-      // Wikiに短時間で大量アクセスしないため少し間隔を空ける。
-      await new Promise(r=>setTimeout(r,350));
-    }catch(err){
-      console.warn("Background WoWS load failed",nation,err);
-    }
-  }
-  if(done){
-    console.log(`WoWS background cache completed: ${done} nations`);
+  }catch(err){
+    console.error("WoWS static data load failed",err);
+    throw new Error(
+      "WoWSデータを取得できませんでした。少し待って再度お試しください。"
+    );
+  }finally{
+    $("startBtn").disabled=false;
+    $("startBtn").textContent="クイズ開始";
   }
 }
 
@@ -561,133 +662,16 @@ async function loadImage(item){
   }
 }
 
-function absoluteKancolleUrl(url){
-  if(!url) return "";
-  if(url.startsWith("//")) return "https:" + url;
-  if(url.startsWith("/")) return "https://en.kancollewiki.net" + url;
-  return url;
-}
-
 async function kancolleImageUrl(item){
-  // v3.1:
-  // 艦これWikiではカード画像の実ファイル名が艦娘によって
-  // "Ship Card Nagato.png" / "Nagato card.jpg" など一定ではないため、
-  // ファイル名を推測せず、その艦娘ページのHTMLから実際のカード画像を探す。
-  const key=`kcimg:v31:${item.en}`;
-  const cached=cacheGet(key,30*24*3600*1000);
-  if(cached) return cached;
-
-  const pageName=(item.en || item.name || "").trim();
-  if(!pageName) return "";
-
-  try{
-    const p=new URLSearchParams({
-      action:"parse",
-      page:pageName,
-      prop:"text",
-      format:"json",
-      formatversion:"2",
-      origin:"*"
-    });
-    const data=await fetch(`${KANCOLLE_API}?${p}`).then(r=>{
-      if(!r.ok) throw new Error(r.status);
-      return r.json();
-    });
-
-    const html=data?.parse?.text || "";
-    if(!html) throw new Error("empty page html");
-
-    const doc=new DOMParser().parseFromString(html,"text/html");
-    const imgs=[...doc.querySelectorAll("img")];
-
-    const wanted=normalizeAnswer(pageName);
-    let candidate=null;
-
-    // まず「Ship Card 艦名」に完全に近いものを探す。
-    candidate=imgs.find(img=>{
-      const alt=(img.getAttribute("alt")||"").trim();
-      if(!/^Ship Card /i.test(alt) || /Damaged/i.test(alt)) return false;
-      const cardName=alt
-        .replace(/^Ship Card /i,"")
-        .replace(/\.(png|jpe?g|webp)$/i,"")
-        .trim();
-      return normalizeAnswer(cardName)===wanted;
-    });
-
-    // Wiki側の表記揺れに備えて、艦名を含む通常カードを次候補にする。
-    if(!candidate){
-      candidate=imgs.find(img=>{
-        const alt=(img.getAttribute("alt")||"").trim();
-        return /^Ship Card /i.test(alt) &&
-               !/Damaged/i.test(alt) &&
-               normalizeAnswer(alt).includes(wanted);
-      });
-    }
-
-    // 基本形態の場合はページ先頭の通常カードを最後の候補にする。
-    if(!candidate){
-      candidate=imgs.find(img=>{
-        const alt=(img.getAttribute("alt")||"").trim();
-        return /^Ship Card /i.test(alt) && !/Damaged/i.test(alt);
-      });
-    }
-
-    if(candidate){
-      let url=candidate.getAttribute("src") || candidate.getAttribute("data-src") || "";
-      if(!url){
-        const srcset=candidate.getAttribute("srcset")||"";
-        if(srcset){
-          url=srcset.split(",").pop().trim().split(/\s+/)[0];
-        }
-      }
-      url=absoluteKancolleUrl(url);
-      if(url){
-        cacheSet(key,url);
-        return url;
-      }
-    }
-
-    // HTMLで取れなければ、ページ内の画像リンク名を利用して imageinfo を再照会。
-    const imageLink=[...doc.querySelectorAll('a[href*="/File:"], a[title^="File:"]')]
-      .find(a=>{
-        const t=(a.getAttribute("title")||decodeURIComponent(a.getAttribute("href")||"")).replaceAll("_"," ");
-        return /Ship Card/i.test(t) && !/Damaged/i.test(t) && normalizeAnswer(t).includes(wanted);
-      });
-
-    const fileTitle=imageLink?.getAttribute("title");
-    if(fileTitle){
-      const q=new URLSearchParams({
-        action:"query",titles:fileTitle,prop:"imageinfo",
-        iiprop:"url",format:"json",origin:"*"
-      });
-      const result=await fetch(`${KANCOLLE_API}?${q}`).then(r=>r.json());
-      const page=Object.values(result.query?.pages||{})[0];
-      const url=absoluteKancolleUrl(page?.imageinfo?.[0]?.url||"");
-      if(url){
-        cacheSet(key,url);
-        return url;
-      }
-    }
-  }catch(err){
-    console.warn("Kancolle page image lookup failed", item.en, err);
-  }
-
+  if(item.imageUrl) return item.imageUrl;
+  if(item.kcId) return `${KANCOLLE_IMAGE_BASE}/${item.kcId}.png`;
   return "";
 }
 
 async function wowsImageUrl(item){
-  const key=`wowsimg:${item.pageTitle}`;
-  const cached=cacheGet(key,30*24*3600*1000);
-  if(cached) return cached;
-  const p=new URLSearchParams({
-    action:"query",titles:item.pageTitle,prop:"pageimages",piprop:"original|thumbnail",
-    pithumbsize:"1400",format:"json",origin:"*"
-  });
-  const data=await fetch(`${WOWS_API}?${p}`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
-  const page=Object.values(data.query?.pages||{})[0];
-  const url=page?.original?.source||page?.thumbnail?.source||"";
-  if(url) cacheSet(key,url);
-  return url;
+  if(item.imageUrl) return item.imageUrl;
+  if(item.index) return `${WOWS_IMAGE_BASE}/${item.index}.png`;
+  return "";
 }
 
 function showResult(){
