@@ -54,3 +54,32 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
   .app-shell{padding:12px}.hero{padding-top:30px}.choices,.filter-grid,.text-actions{grid-template-columns:1fr}
   .image-card{min-height:230px}.image-card img{height:43vh}.topbar{font-size:.92rem}.result-card{margin-top:7vh;padding:28px 20px}
 }
+
+
+/* v3.6 WoWS image quality */
+.image-card img.wows-hd{
+  width:100%;
+  height:min(62vh,620px);
+  object-fit:contain;
+  image-rendering:auto;
+}
+
+.image-card img.wows-lowres{
+  width:auto;
+  height:auto;
+  max-width:min(72%,640px);
+  max-height:420px;
+  object-fit:contain;
+  image-rendering:auto;
+  filter:contrast(1.04) saturate(1.04);
+}
+
+@media(max-width:650px){
+  .image-card img.wows-hd{
+    height:46vh;
+  }
+  .image-card img.wows-lowres{
+    max-width:88%;
+    max-height:300px;
+  }
+}

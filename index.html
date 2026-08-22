@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v3.4</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v3.6</div>
         <h1>世界の艦艇クイズ</h1>
         <p>実在艦艇・艦これ・World of Warshipsを、画像から当てよう。</p>
       </div>
@@ -81,8 +81,24 @@
               <option value="all" selected>すべて</option>
             </select>
           </label>
+
+          <label>
+            WoWS画像の画質
+            <select id="wowsImageQuality">
+              <option value="standard">標準（API ID不要）</option>
+              <option value="hd">HD・公式Large画像</option>
+            </select>
+          </label>
+
+          <label>
+            Wargaming application_id（HD用）
+            <input id="wowsApiId" type="password" autocomplete="off"
+                   placeholder="HDを使う場合だけ入力">
+          </label>
+
           <div class="info-box">
-            WoWSの抽出済みゲームデータをGitHub上の静的データから取得します。
+            標準画像は約214×126pxです。HDではWargaming公式APIのLarge画像を使用します。
+            API IDはこのブラウザ内だけに保存され、GitHubにはアップロードされません。
           </div>
         </div>
 
@@ -149,6 +165,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v3_4.js"></script>
+  <script src="app_v3_6.js"></script>
 </body>
 </html>
