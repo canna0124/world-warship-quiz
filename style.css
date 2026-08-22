@@ -233,3 +233,28 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
   .image-card img.wt-image{max-width:96%;max-height:360px}
   .image-card img.gun-image{height:44vh}
 }
+
+
+/* v4.2 Kancolle banner crop */
+.image-card img.kancolle-banner-crop{
+  width:132%;
+  height:min(60vh,600px);
+  max-width:none;
+  object-fit:cover;
+  object-position:68% 24%;
+  transform:translateX(4%) translateY(-1.5%) scale(1.03);
+  image-rendering:auto;
+}
+.image-card img.kancolle-card-image{
+  width:100%;
+  height:min(56vh,560px);
+  object-fit:contain;
+}
+@media(max-width:650px){
+  .image-card img.kancolle-banner-crop{
+    width:146%;
+    height:46vh;
+    object-position:70% 22%;
+    transform:translateX(5%) translateY(-1%) scale(1.03);
+  }
+}
