@@ -1,0 +1,1639 @@
+[
+  {
+    "id": "gun:ak-47",
+    "mode": "guns",
+    "name": "AK-47",
+    "displayName": "AK-47",
+    "aliases": [
+      "AK-47",
+      "AK47"
+    ],
+    "category": "アサルトライフル",
+    "country": "ソ連",
+    "wiki": "AK-47",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ソ連",
+    "desc": "AK-47 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:akm",
+    "mode": "guns",
+    "name": "AKM",
+    "displayName": "AKM",
+    "aliases": [
+      "AKM"
+    ],
+    "category": "アサルトライフル",
+    "country": "ソ連",
+    "wiki": "AKM",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ソ連",
+    "desc": "AKM — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ak-74",
+    "mode": "guns",
+    "name": "AK-74",
+    "displayName": "AK-74",
+    "aliases": [
+      "AK-74",
+      "AK74"
+    ],
+    "category": "アサルトライフル",
+    "country": "ソ連",
+    "wiki": "AK-74",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ソ連",
+    "desc": "AK-74 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ak-74m",
+    "mode": "guns",
+    "name": "AK-74M",
+    "displayName": "AK-74M",
+    "aliases": [
+      "AK-74M",
+      "AK74M"
+    ],
+    "category": "アサルトライフル",
+    "country": "ロシア",
+    "wiki": "AK-74",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ロシア",
+    "desc": "AK-74M — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ak-12",
+    "mode": "guns",
+    "name": "AK-12",
+    "displayName": "AK-12",
+    "aliases": [
+      "AK-12",
+      "AK12"
+    ],
+    "category": "アサルトライフル",
+    "country": "ロシア",
+    "wiki": "AK-12",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ロシア",
+    "desc": "AK-12 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:an-94",
+    "mode": "guns",
+    "name": "AN-94",
+    "displayName": "AN-94",
+    "aliases": [
+      "AN-94",
+      "AN94"
+    ],
+    "category": "アサルトライフル",
+    "country": "ロシア",
+    "wiki": "AN-94",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ロシア",
+    "desc": "AN-94 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:aek-971",
+    "mode": "guns",
+    "name": "AEK-971",
+    "displayName": "AEK-971",
+    "aliases": [
+      "AEK-971",
+      "AEK971"
+    ],
+    "category": "アサルトライフル",
+    "country": "ロシア",
+    "wiki": "AEK-971",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ロシア",
+    "desc": "AEK-971 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m16a1",
+    "mode": "guns",
+    "name": "M16A1",
+    "displayName": "M16A1",
+    "aliases": [
+      "M16A1",
+      "M16"
+    ],
+    "category": "アサルトライフル",
+    "country": "アメリカ",
+    "wiki": "M16_rifle",
+    "meta": "現代銃 ｜ アサルトライフル ｜ アメリカ",
+    "desc": "M16A1 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m16a2",
+    "mode": "guns",
+    "name": "M16A2",
+    "displayName": "M16A2",
+    "aliases": [
+      "M16A2"
+    ],
+    "category": "アサルトライフル",
+    "country": "アメリカ",
+    "wiki": "M16_rifle",
+    "meta": "現代銃 ｜ アサルトライフル ｜ アメリカ",
+    "desc": "M16A2 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m16a4",
+    "mode": "guns",
+    "name": "M16A4",
+    "displayName": "M16A4",
+    "aliases": [
+      "M16A4"
+    ],
+    "category": "アサルトライフル",
+    "country": "アメリカ",
+    "wiki": "M16_rifle",
+    "meta": "現代銃 ｜ アサルトライフル ｜ アメリカ",
+    "desc": "M16A4 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m4-carbine",
+    "mode": "guns",
+    "name": "M4 Carbine",
+    "displayName": "M4 Carbine",
+    "aliases": [
+      "M4 Carbine",
+      "M4",
+      "M4A1"
+    ],
+    "category": "カービン",
+    "country": "アメリカ",
+    "wiki": "M4_carbine",
+    "meta": "現代銃 ｜ カービン ｜ アメリカ",
+    "desc": "M4 Carbine — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk416",
+    "mode": "guns",
+    "name": "HK416",
+    "displayName": "HK416",
+    "aliases": [
+      "HK416",
+      "H&K HK416"
+    ],
+    "category": "アサルトライフル",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_HK416",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ドイツ",
+    "desc": "HK416 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:g36",
+    "mode": "guns",
+    "name": "G36",
+    "displayName": "G36",
+    "aliases": [
+      "G36",
+      "HK G36"
+    ],
+    "category": "アサルトライフル",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_G36",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ドイツ",
+    "desc": "G36 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:famas",
+    "mode": "guns",
+    "name": "FAMAS",
+    "displayName": "FAMAS",
+    "aliases": [
+      "FAMAS"
+    ],
+    "category": "アサルトライフル",
+    "country": "フランス",
+    "wiki": "FAMAS",
+    "meta": "現代銃 ｜ アサルトライフル ｜ フランス",
+    "desc": "FAMAS — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:aug",
+    "mode": "guns",
+    "name": "AUG",
+    "displayName": "AUG",
+    "aliases": [
+      "AUG",
+      "Steyr AUG"
+    ],
+    "category": "アサルトライフル",
+    "country": "オーストリア",
+    "wiki": "Steyr_AUG",
+    "meta": "現代銃 ｜ アサルトライフル ｜ オーストリア",
+    "desc": "AUG — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:l85a2",
+    "mode": "guns",
+    "name": "L85A2",
+    "displayName": "L85A2",
+    "aliases": [
+      "L85A2",
+      "SA80"
+    ],
+    "category": "アサルトライフル",
+    "country": "イギリス",
+    "wiki": "SA80",
+    "meta": "現代銃 ｜ アサルトライフル ｜ イギリス",
+    "desc": "L85A2 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-f2000",
+    "mode": "guns",
+    "name": "FN F2000",
+    "displayName": "FN F2000",
+    "aliases": [
+      "FN F2000",
+      "F2000"
+    ],
+    "category": "アサルトライフル",
+    "country": "ベルギー",
+    "wiki": "FN_F2000",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ベルギー",
+    "desc": "FN F2000 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-scar-l",
+    "mode": "guns",
+    "name": "FN SCAR-L",
+    "displayName": "FN SCAR-L",
+    "aliases": [
+      "FN SCAR-L",
+      "SCAR-L",
+      "SCAR L"
+    ],
+    "category": "アサルトライフル",
+    "country": "ベルギー / アメリカ",
+    "wiki": "FN_SCAR",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ベルギー / アメリカ",
+    "desc": "FN SCAR-L — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:iwi-tavor-x95",
+    "mode": "guns",
+    "name": "IWI Tavor X95",
+    "displayName": "IWI Tavor X95",
+    "aliases": [
+      "IWI Tavor X95",
+      "X95",
+      "Tavor X95"
+    ],
+    "category": "アサルトライフル",
+    "country": "イスラエル",
+    "wiki": "IWI_Tavor_X95",
+    "meta": "現代銃 ｜ アサルトライフル ｜ イスラエル",
+    "desc": "IWI Tavor X95 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:iwi-tavor-tar-21",
+    "mode": "guns",
+    "name": "IWI Tavor TAR-21",
+    "displayName": "IWI Tavor TAR-21",
+    "aliases": [
+      "IWI Tavor TAR-21",
+      "TAR-21",
+      "Tavor"
+    ],
+    "category": "アサルトライフル",
+    "country": "イスラエル",
+    "wiki": "IWI_Tavor_TAR-21",
+    "meta": "現代銃 ｜ アサルトライフル ｜ イスラエル",
+    "desc": "IWI Tavor TAR-21 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:galil-ace",
+    "mode": "guns",
+    "name": "Galil ACE",
+    "displayName": "Galil ACE",
+    "aliases": [
+      "Galil ACE",
+      "IWI ACE"
+    ],
+    "category": "アサルトライフル",
+    "country": "イスラエル",
+    "wiki": "IWI_ACE",
+    "meta": "現代銃 ｜ アサルトライフル ｜ イスラエル",
+    "desc": "Galil ACE — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sig-sg-550",
+    "mode": "guns",
+    "name": "SIG SG 550",
+    "displayName": "SIG SG 550",
+    "aliases": [
+      "SIG SG 550",
+      "SG 550"
+    ],
+    "category": "アサルトライフル",
+    "country": "スイス",
+    "wiki": "SIG_SG_550",
+    "meta": "現代銃 ｜ アサルトライフル ｜ スイス",
+    "desc": "SIG SG 550 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sig-mcx",
+    "mode": "guns",
+    "name": "SIG MCX",
+    "displayName": "SIG MCX",
+    "aliases": [
+      "SIG MCX"
+    ],
+    "category": "カービン",
+    "country": "アメリカ",
+    "wiki": "SIG_MCX",
+    "meta": "現代銃 ｜ カービン ｜ アメリカ",
+    "desc": "SIG MCX — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:cz-bren-2",
+    "mode": "guns",
+    "name": "CZ BREN 2",
+    "displayName": "CZ BREN 2",
+    "aliases": [
+      "CZ BREN 2",
+      "BREN 2"
+    ],
+    "category": "アサルトライフル",
+    "country": "チェコ",
+    "wiki": "CZ_BREN_2",
+    "meta": "現代銃 ｜ アサルトライフル ｜ チェコ",
+    "desc": "CZ BREN 2 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:howa-type-89",
+    "mode": "guns",
+    "name": "Howa Type 89",
+    "displayName": "Howa Type 89",
+    "aliases": [
+      "Howa Type 89",
+      "89式小銃",
+      "89式5.56mm小銃"
+    ],
+    "category": "アサルトライフル",
+    "country": "日本",
+    "wiki": "Howa_Type_89",
+    "meta": "現代銃 ｜ アサルトライフル ｜ 日本",
+    "desc": "Howa Type 89 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:howa-type-20",
+    "mode": "guns",
+    "name": "Howa Type 20",
+    "displayName": "Howa Type 20",
+    "aliases": [
+      "Howa Type 20",
+      "20式小銃",
+      "20式5.56mm小銃"
+    ],
+    "category": "アサルトライフル",
+    "country": "日本",
+    "wiki": "Howa_Type_20",
+    "meta": "現代銃 ｜ アサルトライフル ｜ 日本",
+    "desc": "Howa Type 20 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:qbz-95",
+    "mode": "guns",
+    "name": "QBZ-95",
+    "displayName": "QBZ-95",
+    "aliases": [
+      "QBZ-95",
+      "95式自動歩槍"
+    ],
+    "category": "アサルトライフル",
+    "country": "中国",
+    "wiki": "QBZ-95",
+    "meta": "現代銃 ｜ アサルトライフル ｜ 中国",
+    "desc": "QBZ-95 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:qbz-191",
+    "mode": "guns",
+    "name": "QBZ-191",
+    "displayName": "QBZ-191",
+    "aliases": [
+      "QBZ-191",
+      "191式自動歩槍"
+    ],
+    "category": "アサルトライフル",
+    "country": "中国",
+    "wiki": "QBZ-191",
+    "meta": "現代銃 ｜ アサルトライフル ｜ 中国",
+    "desc": "QBZ-191 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:daewoo-k2",
+    "mode": "guns",
+    "name": "Daewoo K2",
+    "displayName": "Daewoo K2",
+    "aliases": [
+      "Daewoo K2",
+      "K2 rifle"
+    ],
+    "category": "アサルトライフル",
+    "country": "韓国",
+    "wiki": "Daewoo_Precision_Industries_K2",
+    "meta": "現代銃 ｜ アサルトライフル ｜ 韓国",
+    "desc": "Daewoo K2 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:beretta-arx160",
+    "mode": "guns",
+    "name": "Beretta ARX160",
+    "displayName": "Beretta ARX160",
+    "aliases": [
+      "Beretta ARX160",
+      "ARX160"
+    ],
+    "category": "アサルトライフル",
+    "country": "イタリア",
+    "wiki": "Beretta_ARX160",
+    "meta": "現代銃 ｜ アサルトライフル ｜ イタリア",
+    "desc": "Beretta ARX160 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:vhs-2",
+    "mode": "guns",
+    "name": "VHS-2",
+    "displayName": "VHS-2",
+    "aliases": [
+      "VHS-2",
+      "VHS"
+    ],
+    "category": "アサルトライフル",
+    "country": "クロアチア",
+    "wiki": "VHS_assault_rifle",
+    "meta": "現代銃 ｜ アサルトライフル ｜ クロアチア",
+    "desc": "VHS-2 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-fnc",
+    "mode": "guns",
+    "name": "FN FNC",
+    "displayName": "FN FNC",
+    "aliases": [
+      "FN FNC",
+      "FNC"
+    ],
+    "category": "アサルトライフル",
+    "country": "ベルギー",
+    "wiki": "FN_FNC",
+    "meta": "現代銃 ｜ アサルトライフル ｜ ベルギー",
+    "desc": "FN FNC — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:bushmaster-acr",
+    "mode": "guns",
+    "name": "Bushmaster ACR",
+    "displayName": "Bushmaster ACR",
+    "aliases": [
+      "Bushmaster ACR",
+      "ACR"
+    ],
+    "category": "アサルトライフル",
+    "country": "アメリカ",
+    "wiki": "Bushmaster_ACR",
+    "meta": "現代銃 ｜ アサルトライフル ｜ アメリカ",
+    "desc": "Bushmaster ACR — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-fal",
+    "mode": "guns",
+    "name": "FN FAL",
+    "displayName": "FN FAL",
+    "aliases": [
+      "FN FAL",
+      "FAL"
+    ],
+    "category": "バトルライフル",
+    "country": "ベルギー",
+    "wiki": "FN_FAL",
+    "meta": "現代銃 ｜ バトルライフル ｜ ベルギー",
+    "desc": "FN FAL — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-g3",
+    "mode": "guns",
+    "name": "HK G3",
+    "displayName": "HK G3",
+    "aliases": [
+      "HK G3",
+      "G3"
+    ],
+    "category": "バトルライフル",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_G3",
+    "meta": "現代銃 ｜ バトルライフル ｜ ドイツ",
+    "desc": "HK G3 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m14",
+    "mode": "guns",
+    "name": "M14",
+    "displayName": "M14",
+    "aliases": [
+      "M14"
+    ],
+    "category": "バトルライフル",
+    "country": "アメリカ",
+    "wiki": "M14_rifle",
+    "meta": "現代銃 ｜ バトルライフル ｜ アメリカ",
+    "desc": "M14 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk417",
+    "mode": "guns",
+    "name": "HK417",
+    "displayName": "HK417",
+    "aliases": [
+      "HK417"
+    ],
+    "category": "バトルライフル",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_HK417",
+    "meta": "現代銃 ｜ バトルライフル ｜ ドイツ",
+    "desc": "HK417 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-scar-h",
+    "mode": "guns",
+    "name": "FN SCAR-H",
+    "displayName": "FN SCAR-H",
+    "aliases": [
+      "FN SCAR-H",
+      "SCAR-H",
+      "SCAR H"
+    ],
+    "category": "バトルライフル",
+    "country": "ベルギー / アメリカ",
+    "wiki": "FN_SCAR",
+    "meta": "現代銃 ｜ バトルライフル ｜ ベルギー / アメリカ",
+    "desc": "FN SCAR-H — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ar-10",
+    "mode": "guns",
+    "name": "AR-10",
+    "displayName": "AR-10",
+    "aliases": [
+      "AR-10",
+      "AR10"
+    ],
+    "category": "バトルライフル",
+    "country": "アメリカ",
+    "wiki": "ArmaLite_AR-10",
+    "meta": "現代銃 ｜ バトルライフル ｜ アメリカ",
+    "desc": "AR-10 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sr-25",
+    "mode": "guns",
+    "name": "SR-25",
+    "displayName": "SR-25",
+    "aliases": [
+      "SR-25"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "SR-25",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "SR-25 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m110-sass",
+    "mode": "guns",
+    "name": "M110 SASS",
+    "displayName": "M110 SASS",
+    "aliases": [
+      "M110 SASS",
+      "M110"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "M110_Semi-Automatic_Sniper_System",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "M110 SASS — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mk-12-spr",
+    "mode": "guns",
+    "name": "Mk 12 SPR",
+    "displayName": "Mk 12 SPR",
+    "aliases": [
+      "Mk 12 SPR",
+      "Mk12 SPR"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "Mk_12_Special_Purpose_Rifle",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "Mk 12 SPR — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-g28",
+    "mode": "guns",
+    "name": "HK G28",
+    "displayName": "HK G28",
+    "aliases": [
+      "HK G28",
+      "G28"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_HK417",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ドイツ",
+    "desc": "HK G28 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mp5",
+    "mode": "guns",
+    "name": "MP5",
+    "displayName": "MP5",
+    "aliases": [
+      "MP5",
+      "HK MP5"
+    ],
+    "category": "SMG / PDW",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_MP5",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ドイツ",
+    "desc": "MP5 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mp7",
+    "mode": "guns",
+    "name": "MP7",
+    "displayName": "MP7",
+    "aliases": [
+      "MP7",
+      "HK MP7"
+    ],
+    "category": "SMG / PDW",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_MP7",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ドイツ",
+    "desc": "MP7 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-p90",
+    "mode": "guns",
+    "name": "FN P90",
+    "displayName": "FN P90",
+    "aliases": [
+      "FN P90",
+      "P90"
+    ],
+    "category": "SMG / PDW",
+    "country": "ベルギー",
+    "wiki": "FN_P90",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ベルギー",
+    "desc": "FN P90 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ump45",
+    "mode": "guns",
+    "name": "UMP45",
+    "displayName": "UMP45",
+    "aliases": [
+      "UMP45",
+      "HK UMP",
+      "UMP"
+    ],
+    "category": "SMG / PDW",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_UMP",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ドイツ",
+    "desc": "UMP45 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:kriss-vector",
+    "mode": "guns",
+    "name": "KRISS Vector",
+    "displayName": "KRISS Vector",
+    "aliases": [
+      "KRISS Vector",
+      "Vector"
+    ],
+    "category": "SMG / PDW",
+    "country": "アメリカ",
+    "wiki": "KRISS_Vector",
+    "meta": "現代銃 ｜ SMG / PDW ｜ アメリカ",
+    "desc": "KRISS Vector — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:uzi",
+    "mode": "guns",
+    "name": "Uzi",
+    "displayName": "Uzi",
+    "aliases": [
+      "Uzi"
+    ],
+    "category": "SMG / PDW",
+    "country": "イスラエル",
+    "wiki": "Uzi",
+    "meta": "現代銃 ｜ SMG / PDW ｜ イスラエル",
+    "desc": "Uzi — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mini-uzi",
+    "mode": "guns",
+    "name": "Mini Uzi",
+    "displayName": "Mini Uzi",
+    "aliases": [
+      "Mini Uzi"
+    ],
+    "category": "SMG / PDW",
+    "country": "イスラエル",
+    "wiki": "Uzi",
+    "meta": "現代銃 ｜ SMG / PDW ｜ イスラエル",
+    "desc": "Mini Uzi — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:cz-scorpion-evo-3",
+    "mode": "guns",
+    "name": "CZ Scorpion Evo 3",
+    "displayName": "CZ Scorpion Evo 3",
+    "aliases": [
+      "CZ Scorpion Evo 3",
+      "Scorpion Evo 3"
+    ],
+    "category": "SMG / PDW",
+    "country": "チェコ",
+    "wiki": "CZ_Scorpion_Evo_3",
+    "meta": "現代銃 ｜ SMG / PDW ｜ チェコ",
+    "desc": "CZ Scorpion Evo 3 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:pp-19-vityaz",
+    "mode": "guns",
+    "name": "PP-19 Vityaz",
+    "displayName": "PP-19 Vityaz",
+    "aliases": [
+      "PP-19 Vityaz",
+      "Vityaz"
+    ],
+    "category": "SMG / PDW",
+    "country": "ロシア",
+    "wiki": "PP-19_Vityaz",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ロシア",
+    "desc": "PP-19 Vityaz — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:pp-2000",
+    "mode": "guns",
+    "name": "PP-2000",
+    "displayName": "PP-2000",
+    "aliases": [
+      "PP-2000"
+    ],
+    "category": "SMG / PDW",
+    "country": "ロシア",
+    "wiki": "PP-2000",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ロシア",
+    "desc": "PP-2000 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sr-2-veresk",
+    "mode": "guns",
+    "name": "SR-2 Veresk",
+    "displayName": "SR-2 Veresk",
+    "aliases": [
+      "SR-2 Veresk",
+      "SR-2"
+    ],
+    "category": "SMG / PDW",
+    "country": "ロシア",
+    "wiki": "SR-2_Veresk",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ロシア",
+    "desc": "SR-2 Veresk — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mac-10",
+    "mode": "guns",
+    "name": "MAC-10",
+    "displayName": "MAC-10",
+    "aliases": [
+      "MAC-10"
+    ],
+    "category": "SMG / PDW",
+    "country": "アメリカ",
+    "wiki": "MAC-10",
+    "meta": "現代銃 ｜ SMG / PDW ｜ アメリカ",
+    "desc": "MAC-10 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sig-mpx",
+    "mode": "guns",
+    "name": "SIG MPX",
+    "displayName": "SIG MPX",
+    "aliases": [
+      "SIG MPX",
+      "MPX"
+    ],
+    "category": "SMG / PDW",
+    "country": "アメリカ",
+    "wiki": "SIG_MPX",
+    "meta": "現代銃 ｜ SMG / PDW ｜ アメリカ",
+    "desc": "SIG MPX — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:b-t-apc9",
+    "mode": "guns",
+    "name": "B&T APC9",
+    "displayName": "B&T APC9",
+    "aliases": [
+      "B&T APC9",
+      "APC9"
+    ],
+    "category": "SMG / PDW",
+    "country": "スイス",
+    "wiki": "Br%C3%BCgger_%26_Thomet_APC",
+    "meta": "現代銃 ｜ SMG / PDW ｜ スイス",
+    "desc": "B&T APC9 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sterling-smg",
+    "mode": "guns",
+    "name": "Sterling SMG",
+    "displayName": "Sterling SMG",
+    "aliases": [
+      "Sterling SMG",
+      "Sterling"
+    ],
+    "category": "SMG / PDW",
+    "country": "イギリス",
+    "wiki": "Sterling_submachine_gun",
+    "meta": "現代銃 ｜ SMG / PDW ｜ イギリス",
+    "desc": "Sterling SMG — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:pm-63-rak",
+    "mode": "guns",
+    "name": "PM-63 RAK",
+    "displayName": "PM-63 RAK",
+    "aliases": [
+      "PM-63 RAK",
+      "PM-63"
+    ],
+    "category": "SMG / PDW",
+    "country": "ポーランド",
+    "wiki": "FB_PM-63",
+    "meta": "現代銃 ｜ SMG / PDW ｜ ポーランド",
+    "desc": "PM-63 RAK — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:b-t-mp9",
+    "mode": "guns",
+    "name": "B&T MP9",
+    "displayName": "B&T MP9",
+    "aliases": [
+      "B&T MP9",
+      "MP9"
+    ],
+    "category": "SMG / PDW",
+    "country": "スイス",
+    "wiki": "Br%C3%BCgger_%26_Thomet_MP9",
+    "meta": "現代銃 ｜ SMG / PDW ｜ スイス",
+    "desc": "B&T MP9 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:glock-17",
+    "mode": "guns",
+    "name": "Glock 17",
+    "displayName": "Glock 17",
+    "aliases": [
+      "Glock 17",
+      "G17"
+    ],
+    "category": "拳銃",
+    "country": "オーストリア",
+    "wiki": "Glock",
+    "meta": "現代銃 ｜ 拳銃 ｜ オーストリア",
+    "desc": "Glock 17 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:beretta-92fs",
+    "mode": "guns",
+    "name": "Beretta 92FS",
+    "displayName": "Beretta 92FS",
+    "aliases": [
+      "Beretta 92FS",
+      "M9",
+      "Beretta 92"
+    ],
+    "category": "拳銃",
+    "country": "イタリア",
+    "wiki": "Beretta_92",
+    "meta": "現代銃 ｜ 拳銃 ｜ イタリア",
+    "desc": "Beretta 92FS — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sig-p226",
+    "mode": "guns",
+    "name": "SIG P226",
+    "displayName": "SIG P226",
+    "aliases": [
+      "SIG P226",
+      "P226"
+    ],
+    "category": "拳銃",
+    "country": "スイス / ドイツ",
+    "wiki": "SIG_Sauer_P226",
+    "meta": "現代銃 ｜ 拳銃 ｜ スイス / ドイツ",
+    "desc": "SIG P226 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sig-p320-m17",
+    "mode": "guns",
+    "name": "SIG P320 / M17",
+    "displayName": "SIG P320 / M17",
+    "aliases": [
+      "SIG P320 / M17",
+      "P320",
+      "M17",
+      "M18"
+    ],
+    "category": "拳銃",
+    "country": "アメリカ",
+    "wiki": "SIG_Sauer_P320",
+    "meta": "現代銃 ｜ 拳銃 ｜ アメリカ",
+    "desc": "SIG P320 / M17 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-usp",
+    "mode": "guns",
+    "name": "HK USP",
+    "displayName": "HK USP",
+    "aliases": [
+      "HK USP",
+      "USP"
+    ],
+    "category": "拳銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_USP",
+    "meta": "現代銃 ｜ 拳銃 ｜ ドイツ",
+    "desc": "HK USP — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk45",
+    "mode": "guns",
+    "name": "HK45",
+    "displayName": "HK45",
+    "aliases": [
+      "HK45"
+    ],
+    "category": "拳銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_HK45",
+    "meta": "現代銃 ｜ 拳銃 ｜ ドイツ",
+    "desc": "HK45 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-five-seven",
+    "mode": "guns",
+    "name": "FN Five-seven",
+    "displayName": "FN Five-seven",
+    "aliases": [
+      "FN Five-seven",
+      "Five-seveN"
+    ],
+    "category": "拳銃",
+    "country": "ベルギー",
+    "wiki": "FN_Five-seven",
+    "meta": "現代銃 ｜ 拳銃 ｜ ベルギー",
+    "desc": "FN Five-seven — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:cz-75",
+    "mode": "guns",
+    "name": "CZ 75",
+    "displayName": "CZ 75",
+    "aliases": [
+      "CZ 75",
+      "CZ75"
+    ],
+    "category": "拳銃",
+    "country": "チェコ",
+    "wiki": "CZ_75",
+    "meta": "現代銃 ｜ 拳銃 ｜ チェコ",
+    "desc": "CZ 75 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m1911",
+    "mode": "guns",
+    "name": "M1911",
+    "displayName": "M1911",
+    "aliases": [
+      "M1911",
+      "1911"
+    ],
+    "category": "拳銃",
+    "country": "アメリカ",
+    "wiki": "M1911_pistol",
+    "meta": "現代銃 ｜ 拳銃 ｜ アメリカ",
+    "desc": "M1911 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:desert-eagle",
+    "mode": "guns",
+    "name": "Desert Eagle",
+    "displayName": "Desert Eagle",
+    "aliases": [
+      "Desert Eagle"
+    ],
+    "category": "拳銃",
+    "country": "イスラエル / アメリカ",
+    "wiki": "Desert_Eagle",
+    "meta": "現代銃 ｜ 拳銃 ｜ イスラエル / アメリカ",
+    "desc": "Desert Eagle — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:makarov-pm",
+    "mode": "guns",
+    "name": "Makarov PM",
+    "displayName": "Makarov PM",
+    "aliases": [
+      "Makarov PM",
+      "PM",
+      "マカロフ"
+    ],
+    "category": "拳銃",
+    "country": "ソ連",
+    "wiki": "Makarov_pistol",
+    "meta": "現代銃 ｜ 拳銃 ｜ ソ連",
+    "desc": "Makarov PM — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:stechkin-aps",
+    "mode": "guns",
+    "name": "Stechkin APS",
+    "displayName": "Stechkin APS",
+    "aliases": [
+      "Stechkin APS",
+      "APS"
+    ],
+    "category": "拳銃",
+    "country": "ソ連",
+    "wiki": "Stechkin_automatic_pistol",
+    "meta": "現代銃 ｜ 拳銃 ｜ ソ連",
+    "desc": "Stechkin APS — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:walther-p99",
+    "mode": "guns",
+    "name": "Walther P99",
+    "displayName": "Walther P99",
+    "aliases": [
+      "Walther P99",
+      "P99"
+    ],
+    "category": "拳銃",
+    "country": "ドイツ",
+    "wiki": "Walther_P99",
+    "meta": "現代銃 ｜ 拳銃 ｜ ドイツ",
+    "desc": "Walther P99 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:s-w-m-p",
+    "mode": "guns",
+    "name": "S&W M&P",
+    "displayName": "S&W M&P",
+    "aliases": [
+      "S&W M&P",
+      "M&P"
+    ],
+    "category": "拳銃",
+    "country": "アメリカ",
+    "wiki": "Smith_%26_Wesson_M%26P",
+    "meta": "現代銃 ｜ 拳銃 ｜ アメリカ",
+    "desc": "S&W M&P — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-vp9",
+    "mode": "guns",
+    "name": "HK VP9",
+    "displayName": "HK VP9",
+    "aliases": [
+      "HK VP9",
+      "VP9"
+    ],
+    "category": "拳銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_VP9",
+    "meta": "現代銃 ｜ 拳銃 ｜ ドイツ",
+    "desc": "HK VP9 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:qsz-92",
+    "mode": "guns",
+    "name": "QSZ-92",
+    "displayName": "QSZ-92",
+    "aliases": [
+      "QSZ-92"
+    ],
+    "category": "拳銃",
+    "country": "中国",
+    "wiki": "QSZ-92",
+    "meta": "現代銃 ｜ 拳銃 ｜ 中国",
+    "desc": "QSZ-92 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m249-saw",
+    "mode": "guns",
+    "name": "M249 SAW",
+    "displayName": "M249 SAW",
+    "aliases": [
+      "M249 SAW",
+      "M249"
+    ],
+    "category": "機関銃",
+    "country": "アメリカ",
+    "wiki": "M249_light_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ アメリカ",
+    "desc": "M249 SAW — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m240",
+    "mode": "guns",
+    "name": "M240",
+    "displayName": "M240",
+    "aliases": [
+      "M240"
+    ],
+    "category": "機関銃",
+    "country": "アメリカ",
+    "wiki": "M240_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ アメリカ",
+    "desc": "M240 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-mag",
+    "mode": "guns",
+    "name": "FN MAG",
+    "displayName": "FN MAG",
+    "aliases": [
+      "FN MAG"
+    ],
+    "category": "機関銃",
+    "country": "ベルギー",
+    "wiki": "FN_MAG",
+    "meta": "現代銃 ｜ 機関銃 ｜ ベルギー",
+    "desc": "FN MAG — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:fn-minimi",
+    "mode": "guns",
+    "name": "FN Minimi",
+    "displayName": "FN Minimi",
+    "aliases": [
+      "FN Minimi",
+      "Minimi"
+    ],
+    "category": "機関銃",
+    "country": "ベルギー",
+    "wiki": "FN_Minimi",
+    "meta": "現代銃 ｜ 機関銃 ｜ ベルギー",
+    "desc": "FN Minimi — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:pkm",
+    "mode": "guns",
+    "name": "PKM",
+    "displayName": "PKM",
+    "aliases": [
+      "PKM"
+    ],
+    "category": "機関銃",
+    "country": "ソ連 / ロシア",
+    "wiki": "PK_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ ソ連 / ロシア",
+    "desc": "PKM — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:pkp-pecheneg",
+    "mode": "guns",
+    "name": "PKP Pecheneg",
+    "displayName": "PKP Pecheneg",
+    "aliases": [
+      "PKP Pecheneg",
+      "PKP"
+    ],
+    "category": "機関銃",
+    "country": "ロシア",
+    "wiki": "PKP_Pecheneg_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ ロシア",
+    "desc": "PKP Pecheneg — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:rpk-74",
+    "mode": "guns",
+    "name": "RPK-74",
+    "displayName": "RPK-74",
+    "aliases": [
+      "RPK-74",
+      "RPK74"
+    ],
+    "category": "機関銃",
+    "country": "ソ連",
+    "wiki": "RPK",
+    "meta": "現代銃 ｜ 機関銃 ｜ ソ連",
+    "desc": "RPK-74 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:rpk-16",
+    "mode": "guns",
+    "name": "RPK-16",
+    "displayName": "RPK-16",
+    "aliases": [
+      "RPK-16",
+      "RPK16"
+    ],
+    "category": "機関銃",
+    "country": "ロシア",
+    "wiki": "RPK-16",
+    "meta": "現代銃 ｜ 機関銃 ｜ ロシア",
+    "desc": "RPK-16 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mg3",
+    "mode": "guns",
+    "name": "MG3",
+    "displayName": "MG3",
+    "aliases": [
+      "MG3"
+    ],
+    "category": "機関銃",
+    "country": "ドイツ",
+    "wiki": "MG_3_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ ドイツ",
+    "desc": "MG3 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-mg5",
+    "mode": "guns",
+    "name": "HK MG5",
+    "displayName": "HK MG5",
+    "aliases": [
+      "HK MG5",
+      "MG5"
+    ],
+    "category": "機関銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_MG5",
+    "meta": "現代銃 ｜ 機関銃 ｜ ドイツ",
+    "desc": "HK MG5 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:iwi-negev",
+    "mode": "guns",
+    "name": "IWI Negev",
+    "displayName": "IWI Negev",
+    "aliases": [
+      "IWI Negev",
+      "Negev"
+    ],
+    "category": "機関銃",
+    "country": "イスラエル",
+    "wiki": "IWI_Negev",
+    "meta": "現代銃 ｜ 機関銃 ｜ イスラエル",
+    "desc": "IWI Negev — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:ultimax-100",
+    "mode": "guns",
+    "name": "Ultimax 100",
+    "displayName": "Ultimax 100",
+    "aliases": [
+      "Ultimax 100"
+    ],
+    "category": "機関銃",
+    "country": "シンガポール",
+    "wiki": "Ultimax_100",
+    "meta": "現代銃 ｜ 機関銃 ｜ シンガポール",
+    "desc": "Ultimax 100 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m60",
+    "mode": "guns",
+    "name": "M60",
+    "displayName": "M60",
+    "aliases": [
+      "M60"
+    ],
+    "category": "機関銃",
+    "country": "アメリカ",
+    "wiki": "M60_machine_gun",
+    "meta": "現代銃 ｜ 機関銃 ｜ アメリカ",
+    "desc": "M60 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:daewoo-k3",
+    "mode": "guns",
+    "name": "Daewoo K3",
+    "displayName": "Daewoo K3",
+    "aliases": [
+      "Daewoo K3",
+      "K3"
+    ],
+    "category": "機関銃",
+    "country": "韓国",
+    "wiki": "Daewoo_Precision_Industries_K3",
+    "meta": "現代銃 ｜ 機関銃 ｜ 韓国",
+    "desc": "Daewoo K3 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:svd-dragunov",
+    "mode": "guns",
+    "name": "SVD Dragunov",
+    "displayName": "SVD Dragunov",
+    "aliases": [
+      "SVD Dragunov",
+      "SVD",
+      "ドラグノフ"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ソ連",
+    "wiki": "SVD_(rifle)",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ソ連",
+    "desc": "SVD Dragunov — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:sv-98",
+    "mode": "guns",
+    "name": "SV-98",
+    "displayName": "SV-98",
+    "aliases": [
+      "SV-98"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ロシア",
+    "wiki": "SV-98",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ロシア",
+    "desc": "SV-98 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:chukavin-svch",
+    "mode": "guns",
+    "name": "Chukavin SVCh",
+    "displayName": "Chukavin SVCh",
+    "aliases": [
+      "Chukavin SVCh",
+      "SVCh"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ロシア",
+    "wiki": "Chukavin_sniper_rifle",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ロシア",
+    "desc": "Chukavin SVCh — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m24-sws",
+    "mode": "guns",
+    "name": "M24 SWS",
+    "displayName": "M24 SWS",
+    "aliases": [
+      "M24 SWS",
+      "M24"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "M24_Sniper_Weapon_System",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "M24 SWS — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:m40",
+    "mode": "guns",
+    "name": "M40",
+    "displayName": "M40",
+    "aliases": [
+      "M40"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "M40_rifle",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "M40 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:barrett-m82",
+    "mode": "guns",
+    "name": "Barrett M82",
+    "displayName": "Barrett M82",
+    "aliases": [
+      "Barrett M82",
+      "M82"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "Barrett_M82",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "Barrett M82 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:barrett-m107",
+    "mode": "guns",
+    "name": "Barrett M107",
+    "displayName": "Barrett M107",
+    "aliases": [
+      "Barrett M107",
+      "M107"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "Barrett_M82",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "Barrett M107 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:accuracy-international-arctic-warfare",
+    "mode": "guns",
+    "name": "Accuracy International Arctic Warfare",
+    "displayName": "Accuracy International Arctic Warfare",
+    "aliases": [
+      "Accuracy International Arctic Warfare",
+      "AW",
+      "L96A1"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "イギリス",
+    "wiki": "Accuracy_International_Arctic_Warfare",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ イギリス",
+    "desc": "Accuracy International Arctic Warfare — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:accuracy-international-awm",
+    "mode": "guns",
+    "name": "Accuracy International AWM",
+    "displayName": "Accuracy International AWM",
+    "aliases": [
+      "Accuracy International AWM",
+      "AWM"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "イギリス",
+    "wiki": "Accuracy_International_AWM",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ イギリス",
+    "desc": "Accuracy International AWM — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:accuracy-international-axmc",
+    "mode": "guns",
+    "name": "Accuracy International AXMC",
+    "displayName": "Accuracy International AXMC",
+    "aliases": [
+      "Accuracy International AXMC",
+      "AXMC"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "イギリス",
+    "wiki": "Accuracy_International_AXMC",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ イギリス",
+    "desc": "Accuracy International AXMC — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:cheytac-m200-intervention",
+    "mode": "guns",
+    "name": "CheyTac M200 Intervention",
+    "displayName": "CheyTac M200 Intervention",
+    "aliases": [
+      "CheyTac M200 Intervention",
+      "M200"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "アメリカ",
+    "wiki": "CheyTac_Intervention",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ アメリカ",
+    "desc": "CheyTac M200 Intervention — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:dsr-1",
+    "mode": "guns",
+    "name": "DSR-1",
+    "displayName": "DSR-1",
+    "aliases": [
+      "DSR-1"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ドイツ",
+    "wiki": "DSR-Precision_DSR-1",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ドイツ",
+    "desc": "DSR-1 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:hk-psg1",
+    "mode": "guns",
+    "name": "HK PSG1",
+    "displayName": "HK PSG1",
+    "aliases": [
+      "HK PSG1",
+      "PSG1"
+    ],
+    "category": "DMR / 狙撃銃",
+    "country": "ドイツ",
+    "wiki": "Heckler_%26_Koch_PSG1",
+    "meta": "現代銃 ｜ DMR / 狙撃銃 ｜ ドイツ",
+    "desc": "HK PSG1 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:benelli-m4",
+    "mode": "guns",
+    "name": "Benelli M4",
+    "displayName": "Benelli M4",
+    "aliases": [
+      "Benelli M4",
+      "M1014"
+    ],
+    "category": "ショットガン",
+    "country": "イタリア",
+    "wiki": "Benelli_M4",
+    "meta": "現代銃 ｜ ショットガン ｜ イタリア",
+    "desc": "Benelli M4 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:remington-870",
+    "mode": "guns",
+    "name": "Remington 870",
+    "displayName": "Remington 870",
+    "aliases": [
+      "Remington 870",
+      "870"
+    ],
+    "category": "ショットガン",
+    "country": "アメリカ",
+    "wiki": "Remington_Model_870",
+    "meta": "現代銃 ｜ ショットガン ｜ アメリカ",
+    "desc": "Remington 870 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:mossberg-500",
+    "mode": "guns",
+    "name": "Mossberg 500",
+    "displayName": "Mossberg 500",
+    "aliases": [
+      "Mossberg 500",
+      "M500"
+    ],
+    "category": "ショットガン",
+    "country": "アメリカ",
+    "wiki": "Mossberg_500",
+    "meta": "現代銃 ｜ ショットガン ｜ アメリカ",
+    "desc": "Mossberg 500 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:spas-12",
+    "mode": "guns",
+    "name": "SPAS-12",
+    "displayName": "SPAS-12",
+    "aliases": [
+      "SPAS-12"
+    ],
+    "category": "ショットガン",
+    "country": "イタリア",
+    "wiki": "Franchi_SPAS-12",
+    "meta": "現代銃 ｜ ショットガン ｜ イタリア",
+    "desc": "SPAS-12 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:saiga-12",
+    "mode": "guns",
+    "name": "Saiga-12",
+    "displayName": "Saiga-12",
+    "aliases": [
+      "Saiga-12"
+    ],
+    "category": "ショットガン",
+    "country": "ロシア",
+    "wiki": "Saiga-12",
+    "meta": "現代銃 ｜ ショットガン ｜ ロシア",
+    "desc": "Saiga-12 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:aa-12",
+    "mode": "guns",
+    "name": "AA-12",
+    "displayName": "AA-12",
+    "aliases": [
+      "AA-12"
+    ],
+    "category": "ショットガン",
+    "country": "アメリカ",
+    "wiki": "Atchisson_AA-12",
+    "meta": "現代銃 ｜ ショットガン ｜ アメリカ",
+    "desc": "AA-12 — 現代の小火器識別クイズ"
+  },
+  {
+    "id": "gun:kel-tec-ksg",
+    "mode": "guns",
+    "name": "Kel-Tec KSG",
+    "displayName": "Kel-Tec KSG",
+    "aliases": [
+      "Kel-Tec KSG",
+      "KSG"
+    ],
+    "category": "ショットガン",
+    "country": "アメリカ",
+    "wiki": "Kel-Tec_KSG",
+    "meta": "現代銃 ｜ ショットガン ｜ アメリカ",
+    "desc": "Kel-Tec KSG — 現代の小火器識別クイズ"
+  }
+]

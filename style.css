@@ -212,3 +212,24 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     justify-self:start;
   }
 }
+
+
+/* v4.1 War Thunder / modern firearms */
+.image-card img.wt-image{
+  width:auto;
+  height:auto;
+  max-width:min(88%,900px);
+  max-height:540px;
+  object-fit:contain;
+  image-rendering:auto;
+}
+.image-card img.gun-image{
+  width:100%;
+  height:min(58vh,580px);
+  object-fit:contain;
+  image-rendering:auto;
+}
+@media(max-width:650px){
+  .image-card img.wt-image{max-width:96%;max-height:360px}
+  .image-card img.gun-image{height:44vh}
+}

@@ -4,16 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <title>世界の艦艇クイズ</title>
+  <title>世界のミリタリー画像クイズ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v4.0</div>
-        <h1>世界の艦艇クイズ</h1>
-        <p>実在艦艇・艦これ・World of Warshipsを、画像から当てよう。</p>
+        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS / WT / GUNS ・ v4.1</div>
+        <h1>世界のミリタリー画像クイズ</h1>
+        <p>実在艦艇・艦これ・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
       </div>
 
       <div class="panel settings">
@@ -23,6 +23,8 @@
             <option value="real">⚓ 実在艦艇</option>
             <option value="kancolle">🌸 艦これキャラ</option>
             <option value="wows">🎮 World of Warships</option>
+            <option value="warthunder">🛡️ War Thunder（海軍以外）</option>
+            <option value="guns">🔫 現代の銃</option>
           </select>
         </label>
 
@@ -122,12 +124,45 @@
           </div>
         </div>
 
+        <div id="warthunderFilters" class="filter-grid hidden">
+          <label>
+            兵器カテゴリ
+            <select id="wtCategory">
+              <option value="all" selected>すべて（海軍除外）</option>
+              <option value="ground">🛡️ 地上車両</option>
+              <option value="air">✈️ 航空機</option>
+              <option value="helicopter">🚁 ヘリコプター</option>
+            </select>
+          </label>
+          <div class="info-box">
+            War Thunderの現行localizationにある実装兵器を使用します。海軍・テスト用・キルストリーク等の特殊項目は除外しています。
+          </div>
+        </div>
+
+        <div id="gunsFilters" class="filter-grid hidden">
+          <label>
+            銃のカテゴリ
+            <select id="gunCategory">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <label>
+            国・地域
+            <select id="gunCountry">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <div class="info-box">
+            第二次世界大戦後から現代までの代表的な小火器を収録しています。画像はWikipedia/Wikimediaの公開画像を使用します。
+          </div>
+        </div>
+
         <div id="dataStatus" class="data-status">実在艦艇 74隻を使用</div>
         <button id="startBtn" class="primary">クイズ開始</button>
       </div>
 
       <div class="note">
-        画像は各モードの参照元からオンライン取得します。艦これ・WoWSの画像や名称の権利は各権利者に帰属します。
+        画像は各モードの参照元からオンライン取得します。艦これ・WoWS・War Thunder等のゲーム画像・名称の権利は各権利者に帰属します。
       </div>
     </section>
 
@@ -166,7 +201,7 @@
 
         <form id="textAnswerForm" class="text-answer hidden">
           <input id="textAnswer" type="text" autocomplete="off" spellcheck="false"
-                 placeholder="艦名・キャラ名を入力">
+                 placeholder="名称を入力">
           <div class="text-actions">
             <button id="submitAnswerBtn" type="submit" class="primary">回答する</button>
             <button id="revealBtn" type="button" class="ghost">答えを見る</button>
@@ -201,6 +236,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_0.js"></script>
+  <script src="app_v4_1.js"></script>
 </body>
 </html>
