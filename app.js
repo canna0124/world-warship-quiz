@@ -7,6 +7,9 @@ let correctCount = 0;
 let selectedCount = 10;
 let endless = false;
 let lastSettings = null;
+let currentFilterKey = "";
+let endlessQueue = [];
+let previousEndlessName = null;
 
 const $ = (id) => document.getElementById(id);
 const screens = ["home","quiz","result"];
@@ -23,6 +26,85 @@ function shuffled(arr){
     [a[i],a[j]]=[a[j],a[i]];
   }
   return a;
+}
+
+function historyKey(filterKey){
+  return `warshipQuizSeen::${filterKey}`;
+}
+
+function loadSeen(filterKey){
+  try{
+    return JSON.parse(localStorage.getItem(historyKey(filterKey)) || "[]");
+  }catch{
+    return [];
+  }
+}
+
+function saveSeen(filterKey, names){
+  try{
+    localStorage.setItem(historyKey(filterKey), JSON.stringify(names));
+  }catch{}
+}
+
+function buildNoRepeatQuestions(sourcePool, count, filterKey){
+  const namesInPool = new Set(sourcePool.map(s=>s.name));
+  let seen = loadSeen(filterKey).filter(n=>namesInPool.has(n));
+
+  // 全艦出し切っていたら新しい周回へ。
+  if(seen.length >= sourcePool.length){
+    seen = [];
+  }
+
+  let unseen = shuffled(sourcePool.filter(s=>!seen.includes(s.name)));
+  let result = [];
+
+  while(result.length < count){
+    if(unseen.length === 0){
+      // ここまでで全艦を1周したので、履歴をリセットして次の周回へ。
+      seen = [];
+      unseen = shuffled(sourcePool);
+
+      // 周回境界で直前と同じ艦が来にくいようにする。
+      if(result.length && unseen.length > 1 && unseen[0].name === result[result.length-1].name){
+        [unseen[0], unseen[1]] = [unseen[1], unseen[0]];
+      }
+    }
+
+    const next = unseen.shift();
+
+    // 同一セッション内は、母数が足りる限り重複させない。
+    if(result.some(s=>s.name===next.name) && sourcePool.length >= count){
+      continue;
+    }
+
+    result.push(next);
+    if(!seen.includes(next.name)) seen.push(next.name);
+
+    // 1周完了した時点で履歴をいったん空にして、次回は新しい周回にする。
+    if(seen.length >= sourcePool.length && result.length < count){
+      seen = [];
+    }
+  }
+
+  // 次回のために今回出した艦を記録。
+  const previousSeen = loadSeen(filterKey).filter(n=>namesInPool.has(n));
+  let nextSeen = [...previousSeen];
+  for(const ship of result){
+    if(!nextSeen.includes(ship.name)) nextSeen.push(ship.name);
+    if(nextSeen.length >= sourcePool.length){
+      // ちょうど全艦出し切った場合、次回は新しい周回。
+      nextSeen = [];
+    }
+  }
+  saveSeen(filterKey, nextSeen);
+  return result;
+}
+
+function buildEndlessQueue(){
+  endlessQueue = shuffled(pool);
+  if(previousEndlessName && endlessQueue.length > 1 && endlessQueue[0].name === previousEndlessName){
+    [endlessQueue[0], endlessQueue[1]] = [endlessQueue[1], endlessQueue[0]];
+  }
 }
 
 async function init(){
@@ -70,24 +152,26 @@ function startQuiz(){
     return;
   }
 
+  currentFilterKey = `${era}::${country}`;
   lastSettings = { count: countValue, era, country };
-  questions = shuffled(pool);
   currentIndex = 0;
   correctCount = 0;
+  previousEndlessName = null;
+
+  if(endless){
+    buildEndlessQueue();
+  }else{
+    questions = buildNoRepeatQuestions(pool, selectedCount, currentFilterKey);
+  }
+
   showScreen("quiz");
   renderQuestion();
 }
 
 function currentShip(){
   if(endless){
-    if(currentIndex >= questions.length){
-      questions = shuffled(pool);
-      currentIndex = 0;
-    }
-    return questions[currentIndex];
-  }
-  if(currentIndex >= questions.length){
-    questions = questions.concat(shuffled(pool));
+    if(endlessQueue.length === 0) buildEndlessQueue();
+    return endlessQueue[0];
   }
   return questions[currentIndex];
 }
@@ -101,7 +185,10 @@ async function renderQuestion(){
   $("progress").textContent = `${currentIndex + 1} / ${totalText}`;
   $("score").textContent = `正解 ${correctCount}`;
 
-  const distractors = shuffled(allShips.filter(s=>s.name!==ship.name)).slice(0,3);
+  // 正解と同じ艦級の姉妹艦だけに偏らないよう、まず別艦級から候補を取る。
+  const differentClass = shuffled(allShips.filter(s=>s.name!==ship.name && s.class!==ship.class));
+  const sameClass = shuffled(allShips.filter(s=>s.name!==ship.name && s.class===ship.class));
+  const distractors = [...differentClass, ...sameClass].slice(0,3);
   const choiceShips = shuffled([ship, ...distractors]);
 
   choiceShips.forEach(s=>{
@@ -184,8 +271,17 @@ function answer(chosenName, correctName, clickedBtn){
 }
 
 function nextQuestion(){
+  if(endless){
+    const finished = endlessQueue.shift();
+    previousEndlessName = finished?.name || previousEndlessName;
+    currentIndex++;
+    renderQuestion();
+    window.scrollTo({top:0, behavior:"smooth"});
+    return;
+  }
+
   currentIndex++;
-  if(!endless && currentIndex >= selectedCount){
+  if(currentIndex >= selectedCount){
     showResult();
     return;
   }
@@ -207,5 +303,5 @@ function showResult(){
 
 init().catch(err=>{
   console.error(err);
-  alert("アプリの読み込みに失敗しました。ローカルサーバーから起動してください。README.txtを確認してください。");
+  alert("アプリの読み込みに失敗しました。ローカルサーバーまたはGitHub Pagesから起動してください。");
 });
