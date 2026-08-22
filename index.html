@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v3.8</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v3.9</div>
         <h1>世界の艦艇クイズ</h1>
         <p>実在艦艇・艦これ・World of Warshipsを、画像から当てよう。</p>
       </div>
@@ -41,6 +41,19 @@
             <option value="20">20問</option>
             <option value="30">30問</option>
             <option value="999">エンドレス</option>
+          </select>
+        </label>
+
+        <label>
+          制限時間（1問）
+          <select id="questionTimer">
+            <option value="0">なし</option>
+            <option value="10">10秒</option>
+            <option value="15">15秒</option>
+            <option value="20">20秒</option>
+            <option value="30" selected>30秒</option>
+            <option value="45">45秒</option>
+            <option value="60">60秒</option>
           </select>
         </label>
 
@@ -127,6 +140,18 @@
 
       <div id="modeBadge" class="mode-badge"></div>
 
+      <div id="timerPanel" class="timer-panel hidden">
+        <div class="timer-row">
+          <span class="timer-icon">⏱</span>
+          <span>残り</span>
+          <strong id="timerText">30</strong>
+          <span>秒</span>
+        </div>
+        <div class="timer-track">
+          <div id="timerBar" class="timer-bar"></div>
+        </div>
+      </div>
+
       <div class="image-card">
         <div id="loading" class="loading">画像を読み込み中…</div>
         <img id="shipImage" alt="クイズ画像" referrerpolicy="no-referrer">
@@ -172,6 +197,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v3_8.js"></script>
+  <script src="app_v3_9.js"></script>
 </body>
 </html>

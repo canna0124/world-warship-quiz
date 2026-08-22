@@ -101,3 +101,64 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:340px;
   }
 }
+
+
+/* v3.9 question timer */
+.timer-panel{
+  margin:0 0 12px;
+  padding:10px 13px;
+  border:1px solid var(--border);
+  border-radius:13px;
+  background:rgba(20,43,69,.78);
+  transition:.2s ease;
+}
+.timer-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-weight:900;
+  color:var(--accent2);
+}
+.timer-row strong{
+  min-width:2ch;
+  font-size:1.35rem;
+  text-align:center;
+  color:var(--text);
+}
+.timer-track{
+  height:7px;
+  margin-top:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.10);
+}
+.timer-bar{
+  width:100%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width .25s linear;
+}
+.timer-panel.timer-warning{
+  border-color:rgba(255,209,102,.65);
+}
+.timer-panel.timer-warning .timer-row{
+  color:var(--warn);
+}
+.timer-panel.timer-danger{
+  border-color:rgba(255,107,122,.9);
+  background:rgba(255,107,122,.10);
+  animation:timerPulse .75s ease-in-out infinite alternate;
+}
+.timer-panel.timer-danger .timer-row,
+.timer-panel.timer-danger .timer-row strong{
+  color:var(--bad);
+}
+.timer-panel.timer-danger .timer-bar{
+  background:var(--bad);
+}
+@keyframes timerPulse{
+  from{transform:scale(1)}
+  to{transform:scale(1.006)}
+}
