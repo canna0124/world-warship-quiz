@@ -3,49 +3,95 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>世界の軍艦クイズ</title>
+  <meta name="referrer" content="no-referrer">
+  <title>世界の艦艇クイズ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WWI → MODERN</div>
-        <h1>世界の軍艦クイズ</h1>
-        <p>戦艦・巡洋戦艦・現代の大型水上戦闘艦を写真で当てよう！</p>
+        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS</div>
+        <h1>世界の艦艇クイズ</h1>
+        <p>実在艦艇・艦これ・World of Warshipsを、画像から当てよう。</p>
       </div>
 
       <div class="panel settings">
+        <label>
+          クイズモード
+          <select id="quizMode">
+            <option value="real">⚓ 実在艦艇</option>
+            <option value="kancolle">🌸 艦これキャラ</option>
+            <option value="wows">🎮 World of Warships</option>
+          </select>
+        </label>
+
+        <label>
+          回答方法
+          <select id="answerMode">
+            <option value="choice">4択</option>
+            <option value="text">文字入力</option>
+          </select>
+        </label>
+
         <label>
           出題数
           <select id="questionCount">
             <option value="10" selected>10問</option>
             <option value="20">20問</option>
+            <option value="30">30問</option>
             <option value="999">エンドレス</option>
           </select>
         </label>
 
-        <label>
-          年代
-          <select id="eraFilter">
-            <option value="all" selected>すべて</option>
-            <option value="historic">第一次世界大戦〜第二次世界大戦</option>
-            <option value="modern">冷戦後〜現代</option>
-          </select>
-        </label>
+        <div id="realFilters" class="filter-grid">
+          <label>
+            年代
+            <select id="eraFilter">
+              <option value="all" selected>すべて</option>
+              <option value="historic">第一次世界大戦〜第二次世界大戦</option>
+              <option value="modern">冷戦後〜現代</option>
+            </select>
+          </label>
+          <label>
+            国
+            <select id="countryFilter">
+              <option value="all" selected>すべての国</option>
+            </select>
+          </label>
+        </div>
 
-        <label>
-          国
-          <select id="countryFilter">
-            <option value="all" selected>すべての国</option>
-          </select>
-        </label>
+        <div id="kancolleFilters" class="filter-grid hidden">
+          <label>
+            艦娘の範囲
+            <select id="kancolleVariant">
+              <option value="base" selected>基本形態中心</option>
+              <option value="all">改装形態も含める</option>
+            </select>
+          </label>
+          <div class="info-box">
+            艦これWikiの艦娘一覧をオンライン取得します。取得できない時は内蔵リストに自動で切り替わります。
+          </div>
+        </div>
 
+        <div id="wowsFilters" class="filter-grid hidden">
+          <label>
+            国・地域
+            <select id="wowsNation">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <div class="info-box">
+            WoWS公式Wikiの国別カテゴリから、現在掲載されている艦艇を取得します。
+          </div>
+        </div>
+
+        <div id="dataStatus" class="data-status">実在艦艇 74隻を使用</div>
         <button id="startBtn" class="primary">クイズ開始</button>
       </div>
 
       <div class="note">
-        写真はWikipedia/Wikimediaの公開画像をオンライン取得します。出題は未出題の艦を優先し、同じ艦が何度も続かないようにしています。
+        画像は各モードの参照元からオンライン取得します。艦これ・WoWSの画像や名称の権利は各権利者に帰属します。
       </div>
     </section>
 
@@ -56,16 +102,28 @@
         <div id="score">正解 0</div>
       </header>
 
+      <div id="modeBadge" class="mode-badge"></div>
+
       <div class="image-card">
         <div id="loading" class="loading">画像を読み込み中…</div>
-        <img id="shipImage" alt="出題される軍艦の写真">
+        <img id="shipImage" alt="クイズ画像" referrerpolicy="no-referrer">
         <div id="imageFallback" class="fallback">画像を取得できませんでした</div>
-        <a id="sourceLink" target="_blank" rel="noopener">画像・出典</a>
+        <a id="sourceLink" target="_blank" rel="noopener noreferrer">画像・出典</a>
       </div>
 
       <div class="question-box">
-        <div class="question-kicker">この艦は何でしょう？</div>
+        <div id="questionText" class="question-kicker">これは何でしょう？</div>
         <div id="choices" class="choices"></div>
+
+        <form id="textAnswerForm" class="text-answer hidden">
+          <input id="textAnswer" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="艦名・キャラ名を入力">
+          <div class="text-actions">
+            <button id="submitAnswerBtn" type="submit" class="primary">回答する</button>
+            <button id="revealBtn" type="button" class="ghost">答えを見る</button>
+          </div>
+          <div id="inputHint" class="input-hint"></div>
+        </form>
       </div>
 
       <div id="feedback" class="feedback hidden">
@@ -91,7 +149,6 @@
       </div>
     </section>
   </main>
-
   <script src="app.js"></script>
 </body>
 </html>

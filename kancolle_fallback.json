@@ -1,0 +1,702 @@
+[
+  {
+    "jp": "長門",
+    "en": "Nagato",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Nagato"
+  },
+  {
+    "jp": "陸奥",
+    "en": "Mutsu",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Mutsu"
+  },
+  {
+    "jp": "伊勢",
+    "en": "Ise",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ise"
+  },
+  {
+    "jp": "日向",
+    "en": "Hyuuga",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hyuuga"
+  },
+  {
+    "jp": "大和",
+    "en": "Yamato",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yamato"
+  },
+  {
+    "jp": "武蔵",
+    "en": "Musashi",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Musashi"
+  },
+  {
+    "jp": "金剛",
+    "en": "Kongou",
+    "type": "高速戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kongou"
+  },
+  {
+    "jp": "比叡",
+    "en": "Hiei",
+    "type": "高速戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hiei"
+  },
+  {
+    "jp": "榛名",
+    "en": "Haruna",
+    "type": "高速戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Haruna"
+  },
+  {
+    "jp": "霧島",
+    "en": "Kirishima",
+    "type": "高速戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kirishima"
+  },
+  {
+    "jp": "扶桑",
+    "en": "Fusou",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Fusou"
+  },
+  {
+    "jp": "山城",
+    "en": "Yamashiro",
+    "type": "戦艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yamashiro"
+  },
+  {
+    "jp": "赤城",
+    "en": "Akagi",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Akagi"
+  },
+  {
+    "jp": "加賀",
+    "en": "Kaga",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kaga"
+  },
+  {
+    "jp": "蒼龍",
+    "en": "Souryuu",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Souryuu"
+  },
+  {
+    "jp": "飛龍",
+    "en": "Hiryuu",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hiryuu"
+  },
+  {
+    "jp": "翔鶴",
+    "en": "Shoukaku",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shoukaku"
+  },
+  {
+    "jp": "瑞鶴",
+    "en": "Zuikaku",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Zuikaku"
+  },
+  {
+    "jp": "鳳翔",
+    "en": "Houshou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Houshou"
+  },
+  {
+    "jp": "龍驤",
+    "en": "Ryuujou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ryuujou"
+  },
+  {
+    "jp": "祥鳳",
+    "en": "Shouhou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shouhou"
+  },
+  {
+    "jp": "瑞鳳",
+    "en": "Zuihou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Zuihou"
+  },
+  {
+    "jp": "飛鷹",
+    "en": "Hiyou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hiyou"
+  },
+  {
+    "jp": "隼鷹",
+    "en": "Junyou",
+    "type": "軽空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Junyou"
+  },
+  {
+    "jp": "大鳳",
+    "en": "Taihou",
+    "type": "装甲空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Taihou"
+  },
+  {
+    "jp": "雲龍",
+    "en": "Unryuu",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Unryuu"
+  },
+  {
+    "jp": "天城",
+    "en": "Amagi",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Amagi"
+  },
+  {
+    "jp": "葛城",
+    "en": "Katsuragi",
+    "type": "正規空母",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Katsuragi"
+  },
+  {
+    "jp": "吹雪",
+    "en": "Fubuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Fubuki"
+  },
+  {
+    "jp": "白雪",
+    "en": "Shirayuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shirayuki"
+  },
+  {
+    "jp": "初雪",
+    "en": "Hatsuyuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hatsuyuki"
+  },
+  {
+    "jp": "深雪",
+    "en": "Miyuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Miyuki"
+  },
+  {
+    "jp": "叢雲",
+    "en": "Murakumo",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Murakumo"
+  },
+  {
+    "jp": "磯波",
+    "en": "Isonami",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Isonami"
+  },
+  {
+    "jp": "綾波",
+    "en": "Ayanami",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ayanami"
+  },
+  {
+    "jp": "敷波",
+    "en": "Shikinami",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shikinami"
+  },
+  {
+    "jp": "暁",
+    "en": "Akatsuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Akatsuki"
+  },
+  {
+    "jp": "響",
+    "en": "Hibiki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hibiki"
+  },
+  {
+    "jp": "雷",
+    "en": "Ikazuchi",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ikazuchi"
+  },
+  {
+    "jp": "電",
+    "en": "Inazuma",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Inazuma"
+  },
+  {
+    "jp": "白露",
+    "en": "Shiratsuyu",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shiratsuyu"
+  },
+  {
+    "jp": "時雨",
+    "en": "Shigure",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shigure"
+  },
+  {
+    "jp": "村雨",
+    "en": "Murasame",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Murasame"
+  },
+  {
+    "jp": "夕立",
+    "en": "Yuudachi",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yuudachi"
+  },
+  {
+    "jp": "春雨",
+    "en": "Harusame",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Harusame"
+  },
+  {
+    "jp": "五月雨",
+    "en": "Samidare",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Samidare"
+  },
+  {
+    "jp": "涼風",
+    "en": "Suzukaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Suzukaze"
+  },
+  {
+    "jp": "島風",
+    "en": "Shimakaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shimakaze"
+  },
+  {
+    "jp": "陽炎",
+    "en": "Kagerou",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kagerou"
+  },
+  {
+    "jp": "不知火",
+    "en": "Shiranui",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Shiranui"
+  },
+  {
+    "jp": "黒潮",
+    "en": "Kuroshio",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kuroshio"
+  },
+  {
+    "jp": "初風",
+    "en": "Hatsukaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hatsukaze"
+  },
+  {
+    "jp": "雪風",
+    "en": "Yukikaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yukikaze"
+  },
+  {
+    "jp": "天津風",
+    "en": "Amatsukaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Amatsukaze"
+  },
+  {
+    "jp": "時津風",
+    "en": "Tokitsukaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tokitsukaze"
+  },
+  {
+    "jp": "浦風",
+    "en": "Urakaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Urakaze"
+  },
+  {
+    "jp": "磯風",
+    "en": "Isokaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Isokaze"
+  },
+  {
+    "jp": "浜風",
+    "en": "Hamakaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hamakaze"
+  },
+  {
+    "jp": "谷風",
+    "en": "Tanikaze",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tanikaze"
+  },
+  {
+    "jp": "秋月",
+    "en": "Akizuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Akizuki"
+  },
+  {
+    "jp": "照月",
+    "en": "Teruzuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Teruzuki"
+  },
+  {
+    "jp": "涼月",
+    "en": "Suzutsuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Suzutsuki"
+  },
+  {
+    "jp": "初月",
+    "en": "Hatsuzuki",
+    "type": "駆逐艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Hatsuzuki"
+  },
+  {
+    "jp": "夕張",
+    "en": "Yuubari",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yuubari"
+  },
+  {
+    "jp": "天龍",
+    "en": "Tenryuu",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tenryuu"
+  },
+  {
+    "jp": "龍田",
+    "en": "Tatsuta",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tatsuta"
+  },
+  {
+    "jp": "球磨",
+    "en": "Kuma",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kuma"
+  },
+  {
+    "jp": "多摩",
+    "en": "Tama",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tama"
+  },
+  {
+    "jp": "北上",
+    "en": "Kitakami",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kitakami"
+  },
+  {
+    "jp": "大井",
+    "en": "Ooi",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ooi"
+  },
+  {
+    "jp": "木曾",
+    "en": "Kiso",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kiso"
+  },
+  {
+    "jp": "長良",
+    "en": "Nagara",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Nagara"
+  },
+  {
+    "jp": "五十鈴",
+    "en": "Isuzu",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Isuzu"
+  },
+  {
+    "jp": "名取",
+    "en": "Natori",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Natori"
+  },
+  {
+    "jp": "川内",
+    "en": "Sendai",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Sendai"
+  },
+  {
+    "jp": "神通",
+    "en": "Jintsuu",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Jintsuu"
+  },
+  {
+    "jp": "那珂",
+    "en": "Naka",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Naka"
+  },
+  {
+    "jp": "阿賀野",
+    "en": "Agano",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Agano"
+  },
+  {
+    "jp": "能代",
+    "en": "Noshiro",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Noshiro"
+  },
+  {
+    "jp": "矢矧",
+    "en": "Yahagi",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Yahagi"
+  },
+  {
+    "jp": "酒匂",
+    "en": "Sakawa",
+    "type": "軽巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Sakawa"
+  },
+  {
+    "jp": "古鷹",
+    "en": "Furutaka",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Furutaka"
+  },
+  {
+    "jp": "加古",
+    "en": "Kako",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kako"
+  },
+  {
+    "jp": "青葉",
+    "en": "Aoba",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Aoba"
+  },
+  {
+    "jp": "衣笠",
+    "en": "Kinugasa",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kinugasa"
+  },
+  {
+    "jp": "妙高",
+    "en": "Myoukou",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Myoukou"
+  },
+  {
+    "jp": "那智",
+    "en": "Nachi",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Nachi"
+  },
+  {
+    "jp": "足柄",
+    "en": "Ashigara",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Ashigara"
+  },
+  {
+    "jp": "羽黒",
+    "en": "Haguro",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Haguro"
+  },
+  {
+    "jp": "高雄",
+    "en": "Takao",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Takao"
+  },
+  {
+    "jp": "愛宕",
+    "en": "Atago",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Atago"
+  },
+  {
+    "jp": "摩耶",
+    "en": "Maya",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Maya"
+  },
+  {
+    "jp": "鳥海",
+    "en": "Choukai",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Choukai"
+  },
+  {
+    "jp": "最上",
+    "en": "Mogami",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Mogami"
+  },
+  {
+    "jp": "三隈",
+    "en": "Mikuma",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Mikuma"
+  },
+  {
+    "jp": "鈴谷",
+    "en": "Suzuya",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Suzuya"
+  },
+  {
+    "jp": "熊野",
+    "en": "Kumano",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Kumano"
+  },
+  {
+    "jp": "利根",
+    "en": "Tone",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Tone"
+  },
+  {
+    "jp": "筑摩",
+    "en": "Chikuma",
+    "type": "重巡洋艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Chikuma"
+  },
+  {
+    "jp": "明石",
+    "en": "Akashi",
+    "type": "工作艦",
+    "base": true,
+    "source": "https://en.kancollewiki.net/Akashi"
+  }
+]
