@@ -145,7 +145,7 @@ async function onModeChange(){
     if(modeData.wows.length){
       setStatus(`WoWS ${modeData.wows.length}隻を使用可能`);
     }else{
-      setStatus("WoWS全艦艇はクイズ開始時に公式Wikiから読み込みます");
+      setStatus("WoWSは必要な国だけ先に高速取得します。残りはプレイ中に自動取得します");
     }
   }
 }
@@ -243,40 +243,118 @@ async function fetchCategoryMembers(category){
   return result;
 }
 
-async function loadWowsData(){
-  if(modeData.wows.length) return modeData.wows;
-  const cached=cacheGet("warshipQuizV3:wows",24*3600*1000);
-  if(cached?.length){ modeData.wows=cached; return cached; }
+async function loadWowsNation(nation, quiet=false){
+  const memory = modeData.wows.filter(s=>s.nation===nation);
+  if(memory.length) return memory;
 
-  setStatus("WoWS公式Wikiから全艦艇を読み込み中…",true);
-  try{
-    const jobs=WOWS_NATIONS.map(async nation=>{
-      const members=await fetchCategoryMembers(`Ships of ${nation}`);
-      return members
-        .filter(m=>m.title?.startsWith("Ship:"))
-        .map(m=>{
-          const name=m.title.slice(5);
-          return {
-            id:`wows:${nation}:${name}`,mode:"wows",name,displayName:name,nation,
-            aliases:[name],pageTitle:m.title,
-            source:`https://wiki.worldofwarships.com/${encodeURIComponent(m.title.replaceAll(" ","_"))}`,
-            meta:`World of Warships ｜ ${nation}`,
-            desc:`WoWS公式Wiki掲載艦艇：${name}`
-          };
-        });
+  const key=`warshipQuizV32:wows:${nation}`;
+  const cached=cacheGet(key,7*24*3600*1000);
+  if(cached?.length){
+    modeData.wows=[...new Map([...modeData.wows,...cached].map(x=>[x.id,x])).values()];
+    return cached;
+  }
+
+  if(!quiet) setStatus(`WoWS「${nation}」の艦艇一覧を読み込み中…`,true);
+
+  const members=await fetchCategoryMembers(`Ships of ${nation}`);
+  const list=members
+    .filter(m=>m.title?.startsWith("Ship:"))
+    .map(m=>{
+      const name=m.title.slice(5);
+      return {
+        id:`wows:${nation}:${name}`,mode:"wows",name,displayName:name,nation,
+        aliases:[name],pageTitle:m.title,
+        source:`https://wiki.worldofwarships.com/${encodeURIComponent(m.title.replaceAll(" ","_"))}`,
+        meta:`World of Warships ｜ ${nation}`,
+        desc:`WoWS公式Wiki掲載艦艇：${name}`
+      };
     });
-    const groups=await Promise.all(jobs);
-    const unique=[...new Map(groups.flat().map(x=>[x.id,x])).values()];
-    if(unique.length<300) throw new Error(`too few WoWS ships: ${unique.length}`);
-    modeData.wows=unique;
-    cacheSet("warshipQuizV3:wows",unique);
-    setStatus(`WoWS ${unique.length}隻を読み込みました`);
-    return unique;
-  }catch(err){
-    console.error(err);
-    throw new Error("WoWS公式Wikiから艦艇一覧を取得できませんでした。少し時間を置いて再度お試しください。");
-  }finally{
-    $("startBtn").disabled=false;
+
+  if(!list.length) throw new Error(`${nation} の艦艇一覧を取得できませんでした。`);
+
+  cacheSet(key,list);
+  modeData.wows=[...new Map([...modeData.wows,...list].map(x=>[x.id,x])).values()];
+  return list;
+}
+
+function cachedWowsNations(){
+  return WOWS_NATIONS.filter(n=>{
+    if(modeData.wows.some(s=>s.nation===n)) return true;
+    return !!cacheGet(`warshipQuizV32:wows:${n}`,7*24*3600*1000)?.length;
+  });
+}
+
+async function loadWowsPoolForQuiz(){
+  const selected=$("wowsNation").value;
+
+  // 国を指定した場合は、その国だけ1回取得するので非常に速い。
+  if(selected!=="all"){
+    try{
+      const list=await loadWowsNation(selected);
+      setStatus(`WoWS ${selected}：${list.length}隻を使用`);
+      return list;
+    }finally{
+      $("startBtn").disabled=false;
+      $("startBtn").textContent="クイズ開始";
+    }
+  }
+
+  // 「すべて」の場合も14か国を一度に読まない。
+  // 最初のクイズに必要な分だけ、2～4か国を先に取得して即スタートする。
+  const needNations = selectedCount>=30 ? 4 : selectedCount>=20 ? 3 : 2;
+  const shuffledNations=shuffled(WOWS_NATIONS);
+  const already=cachedWowsNations();
+  const ordered=[
+    ...shuffled(already),
+    ...shuffledNations.filter(n=>!already.includes(n))
+  ];
+  const target=ordered.slice(0,needNations);
+
+  setStatus(`WoWSを高速読み込み中… 0 / ${target.length}か国`,true);
+  $("startBtn").textContent="読み込み中…";
+
+  const loaded=[];
+  for(let i=0;i<target.length;i++){
+    const nation=target[i];
+    try{
+      const list=await loadWowsNation(nation,true);
+      loaded.push(...list);
+      setStatus(`WoWSを高速読み込み中… ${i+1} / ${target.length}か国（${loaded.length}隻）`,true);
+    }catch(err){
+      console.warn("WoWS nation load failed",nation,err);
+    }
+  }
+
+  $("startBtn").disabled=false;
+  $("startBtn").textContent="クイズ開始";
+
+  if(loaded.length<4){
+    throw new Error("WoWSの艦艇一覧を取得できませんでした。ネット接続を確認して、もう一度お試しください。");
+  }
+
+  setStatus(`WoWS ${loaded.length}隻で開始します。残りの国はプレイ中にバックグラウンド取得します。`);
+
+  // クイズ開始後に残りをゆっくり取得してキャッシュ。
+  // 次回以降は「すべて」でもほぼ待たずに開始できる。
+  setTimeout(()=>backgroundLoadRemainingWows(target),1200);
+  return loaded;
+}
+
+async function backgroundLoadRemainingWows(initialNations=[]){
+  const rest=WOWS_NATIONS.filter(n=>!initialNations.includes(n) && !cachedWowsNations().includes(n));
+  let done=0;
+  for(const nation of rest){
+    try{
+      await loadWowsNation(nation,true);
+      done++;
+      // Wikiに短時間で大量アクセスしないため少し間隔を空ける。
+      await new Promise(r=>setTimeout(r,350));
+    }catch(err){
+      console.warn("Background WoWS load failed",nation,err);
+    }
+  }
+  if(done){
+    console.log(`WoWS background cache completed: ${done} nations`);
   }
 }
 
@@ -289,7 +367,7 @@ async function startQuiz(){
 
   try{
     if(currentMode==="kancolle") await loadKancolleData();
-    if(currentMode==="wows") await loadWowsData();
+    if(currentMode==="wows") activePool = await loadWowsPoolForQuiz();
   }catch(e){
     alert(e.message||String(e)); return;
   }
@@ -309,7 +387,11 @@ async function startQuiz(){
     activePool=modeData.kancolle.filter(s=>all||s.isBase);
   }else{
     const nation=$("wowsNation").value;
-    activePool=modeData.wows.filter(s=>nation==="all"||s.nation===nation);
+    // WoWSは loadWowsPoolForQuiz() で必要分だけ高速取得済み。
+    // 国指定時だけ念のため指定国へ絞る。
+    if(nation!=="all"){
+      activePool=activePool.filter(s=>s.nation===nation);
+    }
   }
 
   if(activePool.length<4 && currentAnswerMode==="choice"){
@@ -479,19 +561,118 @@ async function loadImage(item){
   }
 }
 
+function absoluteKancolleUrl(url){
+  if(!url) return "";
+  if(url.startsWith("//")) return "https:" + url;
+  if(url.startsWith("/")) return "https://en.kancollewiki.net" + url;
+  return url;
+}
+
 async function kancolleImageUrl(item){
-  const key=`kcimg:${item.en}`;
+  // v3.1:
+  // 艦これWikiではカード画像の実ファイル名が艦娘によって
+  // "Ship Card Nagato.png" / "Nagato card.jpg" など一定ではないため、
+  // ファイル名を推測せず、その艦娘ページのHTMLから実際のカード画像を探す。
+  const key=`kcimg:v31:${item.en}`;
   const cached=cacheGet(key,30*24*3600*1000);
   if(cached) return cached;
-  const fileTitle=`File:Ship Card ${item.en}.png`;
+
+  const pageName=(item.en || item.name || "").trim();
+  if(!pageName) return "";
+
   try{
-    const p=new URLSearchParams({action:"query",titles:fileTitle,prop:"imageinfo",iiprop:"url",format:"json",origin:"*"});
-    const data=await fetch(`${KANCOLLE_API}?${p}`).then(r=>r.json());
-    const page=Object.values(data.query?.pages||{})[0];
-    const url=page?.imageinfo?.[0]?.url;
-    if(url){cacheSet(key,url);return url;}
-  }catch{}
-  return `https://en.kancollewiki.net/Special:Redirect/file/${encodeURIComponent(`Ship Card ${item.en}.png`).replace(/%20/g,"_")}`;
+    const p=new URLSearchParams({
+      action:"parse",
+      page:pageName,
+      prop:"text",
+      format:"json",
+      formatversion:"2",
+      origin:"*"
+    });
+    const data=await fetch(`${KANCOLLE_API}?${p}`).then(r=>{
+      if(!r.ok) throw new Error(r.status);
+      return r.json();
+    });
+
+    const html=data?.parse?.text || "";
+    if(!html) throw new Error("empty page html");
+
+    const doc=new DOMParser().parseFromString(html,"text/html");
+    const imgs=[...doc.querySelectorAll("img")];
+
+    const wanted=normalizeAnswer(pageName);
+    let candidate=null;
+
+    // まず「Ship Card 艦名」に完全に近いものを探す。
+    candidate=imgs.find(img=>{
+      const alt=(img.getAttribute("alt")||"").trim();
+      if(!/^Ship Card /i.test(alt) || /Damaged/i.test(alt)) return false;
+      const cardName=alt
+        .replace(/^Ship Card /i,"")
+        .replace(/\.(png|jpe?g|webp)$/i,"")
+        .trim();
+      return normalizeAnswer(cardName)===wanted;
+    });
+
+    // Wiki側の表記揺れに備えて、艦名を含む通常カードを次候補にする。
+    if(!candidate){
+      candidate=imgs.find(img=>{
+        const alt=(img.getAttribute("alt")||"").trim();
+        return /^Ship Card /i.test(alt) &&
+               !/Damaged/i.test(alt) &&
+               normalizeAnswer(alt).includes(wanted);
+      });
+    }
+
+    // 基本形態の場合はページ先頭の通常カードを最後の候補にする。
+    if(!candidate){
+      candidate=imgs.find(img=>{
+        const alt=(img.getAttribute("alt")||"").trim();
+        return /^Ship Card /i.test(alt) && !/Damaged/i.test(alt);
+      });
+    }
+
+    if(candidate){
+      let url=candidate.getAttribute("src") || candidate.getAttribute("data-src") || "";
+      if(!url){
+        const srcset=candidate.getAttribute("srcset")||"";
+        if(srcset){
+          url=srcset.split(",").pop().trim().split(/\s+/)[0];
+        }
+      }
+      url=absoluteKancolleUrl(url);
+      if(url){
+        cacheSet(key,url);
+        return url;
+      }
+    }
+
+    // HTMLで取れなければ、ページ内の画像リンク名を利用して imageinfo を再照会。
+    const imageLink=[...doc.querySelectorAll('a[href*="/File:"], a[title^="File:"]')]
+      .find(a=>{
+        const t=(a.getAttribute("title")||decodeURIComponent(a.getAttribute("href")||"")).replaceAll("_"," ");
+        return /Ship Card/i.test(t) && !/Damaged/i.test(t) && normalizeAnswer(t).includes(wanted);
+      });
+
+    const fileTitle=imageLink?.getAttribute("title");
+    if(fileTitle){
+      const q=new URLSearchParams({
+        action:"query",titles:fileTitle,prop:"imageinfo",
+        iiprop:"url",format:"json",origin:"*"
+      });
+      const result=await fetch(`${KANCOLLE_API}?${q}`).then(r=>r.json());
+      const page=Object.values(result.query?.pages||{})[0];
+      const url=absoluteKancolleUrl(page?.imageinfo?.[0]?.url||"");
+      if(url){
+        cacheSet(key,url);
+        return url;
+      }
+    }
+  }catch(err){
+    console.warn("Kancolle page image lookup failed", item.en, err);
+  }
+
+  return "";
 }
 
 async function wowsImageUrl(item){
