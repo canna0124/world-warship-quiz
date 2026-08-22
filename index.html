@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v3.9</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS ・ v4.0</div>
         <h1>世界の艦艇クイズ</h1>
         <p>実在艦艇・艦これ・World of Warshipsを、画像から当てよう。</p>
       </div>
@@ -135,6 +135,7 @@
       <header class="topbar">
         <button id="quitBtn" class="ghost">← 終了</button>
         <div id="progress">1 / 10</div>
+        <div id="totalTimer" class="total-timer">⏱ 経過 <strong id="totalTimerText">00:00</strong></div>
         <div id="score">正解 0</div>
       </header>
 
@@ -189,6 +190,9 @@
         <h1>クイズ結果</h1>
         <div id="resultScore" class="big-score">0 / 10</div>
         <div id="resultRate" class="rate">正答率 0%</div>
+        <div class="result-time">
+          ⏱ クリアタイム <strong id="resultTotalTime">00:00</strong>
+        </div>
         <p id="resultMessage"></p>
         <div class="result-actions">
           <button id="retryBtn" class="primary">もう一度</button>
@@ -197,6 +201,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v3_9.js"></script>
+  <script src="app_v4_0.js"></script>
 </body>
 </html>
