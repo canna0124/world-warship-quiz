@@ -11,9 +11,9 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS / WT / GUNS ・ v4.4</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS ・ v4.5</div>
         <h1>世界のミリタリー画像クイズ</h1>
-        <p>実在艦艇・艦これ・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
+        <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
       </div>
 
       <div class="panel settings">
@@ -22,6 +22,7 @@
           <select id="quizMode">
             <option value="real">⚓ 実在艦艇</option>
             <option value="kancolle">🌸 艦これキャラ</option>
+            <option value="azurlane">⚓ アズールレーン</option>
             <option value="wows">🎮 World of Warships</option>
             <option value="warthunder">🛡️ War Thunder（海軍以外）</option>
             <option value="guns">🔫 現代の銃</option>
@@ -96,6 +97,30 @@
           </div>
         </div>
 
+        <div id="azurlaneFilters" class="filter-grid hidden">
+          <label>
+            陣営
+            <select id="azurFaction">
+              <option value="all" selected>すべての陣営</option>
+            </select>
+          </label>
+          <label>
+            艦種
+            <select id="azurHullType">
+              <option value="all" selected>すべての艦種</option>
+            </select>
+          </label>
+          <label>
+            レアリティ
+            <select id="azurRarity">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <div class="info-box">
+            アズールレーンのキャラ画像と日本語・英語名をオンラインのゲームデータから読み込みます。初回だけ少し時間がかかる場合があります。
+          </div>
+        </div>
+
         <div id="wowsFilters" class="filter-grid hidden">
           <label>
             国・地域
@@ -162,7 +187,7 @@
       </div>
 
       <div class="note">
-        画像は各モードの参照元からオンライン取得します。艦これ・WoWS・War Thunder等のゲーム画像・名称の権利は各権利者に帰属します。
+        画像は各モードの参照元からオンライン取得します。艦これ・アズールレーン・WoWS・War Thunder等のゲーム画像・名称の権利は各権利者に帰属します。
       </div>
     </section>
 
@@ -236,6 +261,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_4.js"></script>
+  <script src="app_v4_5.js"></script>
 </body>
 </html>
