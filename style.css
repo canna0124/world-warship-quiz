@@ -235,49 +235,26 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
 }
 
 
-/* v4.6 Kancolle banner crop
-   左端の艦種マーク部分を約25%カットし、
-   残り75%を横幅いっぱいに表示する */
+/* v4.4 Kancolle banner crop (no zoom) */
 .image-card img.kancolle-banner-crop{
-  justify-self:start;
-  align-self:center;
-  width:133.34%;
-  height:auto;
+  width:100%;
+  height:min(60vh,600px);
   max-width:none;
-  max-height:none;
-  object-fit:contain;
-  object-position:left center;
-  transform:translateX(-25%);
+  object-fit:cover;
+  object-position:76% 18%;
+  transform:none;
   image-rendering:auto;
-  background:#02060a;
 }
 .image-card img.kancolle-card-image{
   width:100%;
   height:min(56vh,560px);
   object-fit:contain;
 }
-
 @media(max-width:650px){
   .image-card img.kancolle-banner-crop{
-    width:133.34%;
-    height:auto;
-    transform:translateX(-25%);
-  }
-}
-
-/* v4.5 Azur Lane */
-.image-card img.azurlane-image{
-  width:100%;
-  height:min(68vh,680px);
-  object-fit:contain;
-  object-position:center center;
-  background:
-    radial-gradient(circle at center,rgba(89,195,255,.08),transparent 58%),
-    #02060a;
-  image-rendering:auto;
-}
-@media(max-width:650px){
-  .image-card img.azurlane-image{
-    height:52vh;
+    width:100%;
+    height:46vh;
+    object-position:82% 18%;
+    transform:none;
   }
 }
