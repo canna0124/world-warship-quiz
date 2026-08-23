@@ -258,3 +258,25 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     transform:none;
   }
 }
+
+
+/* v4.5 Kancolle high-quality full illustration */
+.image-card img.kancolle-full-image{
+  width:100%;
+  height:min(72vh,760px);
+  max-width:100%;
+  max-height:760px;
+  object-fit:contain;
+  object-position:center center;
+  transform:none;
+  image-rendering:auto;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(89,195,255,.10),transparent 55%),
+    #02060a;
+}
+@media(max-width:650px){
+  .image-card img.kancolle-full-image{
+    height:58vh;
+    max-height:620px;
+  }
+}

@@ -10,6 +10,14 @@ const KANCOLLE_IMAGE_BASE_BANNER =
   "https://raw.githubusercontent.com/Nishisonic/gkcoi/master/static/ship/banner";
 const KANCOLLE_SOURCE_URL =
   "https://github.com/Nishisonic/gkcoi";
+const KANCOLLE_FULL_SERVER = "w01y.kancolle-server.com";
+const KANCOLLE_CG_KEYS = [
+  6657,5699,3371,8909,7719,6229,5449,8561,2987,5501,3127,9319,4365,9811,9927,2423,3439,1865,5925,4409,5509,1517,9695,9255,
+  5325,3691,5519,6949,5607,9539,4133,7795,5465,2659,6381,6875,4019,9195,5645,2887,1213,1815,8671,3015,3147,2991,7977,7045,
+  1619,7909,4451,6573,4545,8251,5983,2849,7249,7449,9477,5963,2711,9019,7375,2201,5631,4893,7653,3719,8819,5839,1853,9843,
+  9119,7023,5681,2345,9873,6349,9315,3795,9737,4633,4173,7549,7171,6147,4723,5039,2723,7815,6201,5999,5339,4431,2911,4435,
+  3611,4423,9517,3243
+];
 
 const WOWS_DATA_URL =
   "https://raw.githubusercontent.com/wowsinfo/data/master/live/app/data/wowsinfo.json";
@@ -23,11 +31,6 @@ const WOWS_SOURCE_URL =
 const WOWS_OFFICIAL_API =
   "https://api.worldofwarships.asia/wows/encyclopedia/ships/";
 
-const AZURLANE_DATA_URL =
-  "https://raw.githubusercontent.com/iujab/Lycoris-AzurAPI/main/data/ships.json";
-const AZURLANE_SOURCE_URL =
-  "https://github.com/iujab/Lycoris-AzurAPI";
-
 let wowsHdImages = {};
 const WOWS_LOCAL_MEDIUM_BASE = "./wows_images/medium";
 const wowsLocalMediumCache = {};
@@ -39,7 +42,7 @@ const WOWS_NATIONS = [
 let realShips = [];
 let kancolleFallback = [];
 let warThunderVersion = "";
-let modeData = { real: [], kancolle: [], azurlane: [], wows: [], warthunder: [], guns: [] };
+let modeData = { real: [], kancolle: [], wows: [], warthunder: [], guns: [] };
 let activePool = [];
 let questions = [];
 let endlessQueue = [];
@@ -227,7 +230,6 @@ function historyKey(){
   let filter = "";
   if(currentMode==="real") filter = `${$("eraFilter").value}:${$("countryFilter").value}`;
   if(currentMode==="kancolle") filter = $("kancolleVariant").value;
-  if(currentMode==="azurlane") filter = `${$("azurFaction")?.value || "all"}:${$("azurHullType")?.value || "all"}:${$("azurRarity")?.value || "all"}`;
   if(currentMode==="wows") filter = $("wowsNation").value;
   if(currentMode==="warthunder") filter = $("wtCategory")?.value || "all";
   if(currentMode==="guns") filter = `${$("gunCategory")?.value || "all"}:${$("gunCountry")?.value || "all"}`;
@@ -265,23 +267,12 @@ function buildNoRepeat(pool,count){
   return result;
 }
 
-async function fetchJsonSafe(url,fallback){
-  try{
-    const r=await fetch(url,{cache:"no-store"});
-    if(!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
-    return await r.json();
-  }catch(err){
-    console.warn("JSON load failed",url,err);
-    return fallback;
-  }
-}
-
 async function init(){
   const [realData,kcFallback,wtData,gunsData] = await Promise.all([
-    fetchJsonSafe("ships.json",[]),
-    fetchJsonSafe("kancolle_fallback.json",[]),
-    fetchJsonSafe("warthunder.json",{version:"",items:[]}),
-    fetchJsonSafe("guns.json",[])
+    fetch("ships.json").then(r=>r.json()),
+    fetch("kancolle_fallback.json").then(r=>r.json()),
+    fetch("warthunder.json").then(r=>r.json()),
+    fetch("guns.json").then(r=>r.json())
   ]);
   realShips=realData;
   kancolleFallback=kcFallback;
@@ -317,9 +308,6 @@ async function init(){
   $("wtCategory")?.addEventListener("change",onModeChange);
   $("gunCategory")?.addEventListener("change",onModeChange);
   $("gunCountry")?.addEventListener("change",onModeChange);
-  $("azurFaction")?.addEventListener("change",onModeChange);
-  $("azurHullType")?.addEventListener("change",onModeChange);
-  $("azurRarity")?.addEventListener("change",onModeChange);
   $("kancolleImageType")?.addEventListener("change",()=>{ modeData.kancolle=[]; });
 
   const savedApiId=localStorage.getItem("warshipQuiz:wowsApiId")||"";
@@ -342,10 +330,6 @@ async function init(){
   $("homeBtn").onclick=()=>{ stopQuestionTimer(); stopTotalTimer(); showScreen("home"); };
 
   onModeChange();
-
-  if(!modeData.real.length && !modeData.warthunder.length && !modeData.guns.length){
-    setStatus("データファイルを読み込めませんでした。GitHub上のJSON配置を確認してください");
-  }
 }
 
 function setStatus(text,busy=false){
@@ -357,7 +341,6 @@ async function onModeChange(){
   const mode=$("quizMode").value;
   $("realFilters").classList.toggle("hidden",mode!=="real");
   $("kancolleFilters").classList.toggle("hidden",mode!=="kancolle");
-  $("azurlaneFilters")?.classList.toggle("hidden",mode!=="azurlane");
   $("wowsFilters").classList.toggle("hidden",mode!=="wows");
   $("warthunderFilters")?.classList.toggle("hidden",mode!=="warthunder");
   $("gunsFilters")?.classList.toggle("hidden",mode!=="guns");
@@ -370,20 +353,6 @@ async function onModeChange(){
     }else{
       setStatus("艦これデータはクイズ開始時に読み込みます");
     }
-  }else if(mode==="azurlane"){
-    if(modeData.azurlane.length){
-      const faction=$("azurFaction")?.value || "all";
-      const hull=$("azurHullType")?.value || "all";
-      const rarity=$("azurRarity")?.value || "all";
-      const count=modeData.azurlane.filter(s=>
-        (faction==="all"||s.nationality===faction) &&
-        (hull==="all"||s.hullType===hull) &&
-        (rarity==="all"||s.rarity===rarity)
-      ).length;
-      setStatus(`アズールレーン ${count.toLocaleString()}キャラを使用可能`);
-    }else{
-      setStatus("アズールレーンのキャラデータはクイズ開始時に読み込みます");
-    }
   }else if(mode==="wows"){
     if(modeData.wows.length){
       setStatus(`WoWS ${modeData.wows.length}隻を使用可能`);
@@ -393,20 +362,12 @@ async function onModeChange(){
   }else if(mode==="warthunder"){
     const cat=$("wtCategory")?.value || "all";
     const count=modeData.warthunder.filter(x=>cat==="all"||x.category===cat).length;
-    if(count===0){
-      setStatus("War Thunderデータがありません。warthunder.json を同じ場所に置いてください");
-    }else{
-      setStatus(`War Thunder ${count.toLocaleString()}兵器（海軍除外）${warThunderVersion?` / data ${warThunderVersion}`:""}`);
-    }
+    setStatus(`War Thunder ${count.toLocaleString()}兵器（海軍除外）${warThunderVersion?` / data ${warThunderVersion}`:""}`);
   }else if(mode==="guns"){
     const cat=$("gunCategory")?.value || "all";
     const country=$("gunCountry")?.value || "all";
     const count=modeData.guns.filter(x=>(cat==="all"||x.category===cat)&&(country==="all"||x.country===country)).length;
-    if(count===0){
-      setStatus("現代銃データがありません。guns.json を同じ場所に置いてください");
-    }else{
-      setStatus(`現代銃 ${count}種類を使用`);
-    }
+    setStatus(`現代銃 ${count}種類を使用`);
   }
 }
 function cacheGet(key,maxAgeMs){
@@ -425,6 +386,32 @@ function currentKancolleImageBase(){
   return mode==="card" ? KANCOLLE_IMAGE_BASE_CARD : KANCOLLE_IMAGE_BASE_BANNER;
 }
 
+function kancolleImageTypeLabel(){
+  const mode=$("kancolleImageType")?.value || "banner";
+  if(mode==="full") return "高画質フルイラスト";
+  if(mode==="card") return "カード";
+  return "バナー";
+}
+
+function kancolleAssetKey(text){
+  return String(text).split("").reduce((sum,ch)=>sum+ch.charCodeAt(0),0);
+}
+
+function kancolleAssetCreate(id,type){
+  const i=Number(id);
+  const keyIndex=(kancolleAssetKey(type)+i*type.length)%100;
+  const key=KANCOLLE_CG_KEYS[keyIndex];
+  return String(((17*(i+7)*key)%8973)+1000);
+}
+
+function kancolleFullImageUrl(id,filename){
+  const i=Number(id);
+  if(!Number.isFinite(i) || !filename) return "";
+  const padded=String(i).padStart(4,"0");
+  const token=kancolleAssetCreate(i,"ship_full");
+  return `https://${KANCOLLE_FULL_SERVER}/kcs2/resources/ship/full/${padded}_${token}_${filename}.png`;
+}
+
 async function loadKancolleData(){
   if(modeData.kancolle.length) return modeData.kancolle;
 
@@ -432,11 +419,11 @@ async function loadKancolleData(){
   const cached=cacheGet(cacheKey,7*24*3600*1000);
   if(cached?.length){
     modeData.kancolle=cached;
-    setStatus(`艦これ ${cached.length}形態を使用可能（${$("kancolleImageType")?.value === "card" ? "カード" : "バナー"}画像）`);
+    setStatus(`艦これ ${cached.length}形態を使用可能（${kancolleImageTypeLabel()}画像）`);
     return cached;
   }
 
-  setStatus(`艦これデータを読み込み中…（${$("kancolleImageType")?.value === "card" ? "カード" : "バナー"}画像）`,true);
+  setStatus(`艦これデータを読み込み中…（${kancolleImageTypeLabel()}画像）`,true);
   $("startBtn").textContent="読み込み中…";
 
   try{
@@ -453,8 +440,13 @@ async function loadKancolleData(){
     const master=raw.api_data || raw;
     const ships=Array.isArray(master.api_mst_ship) ? master.api_mst_ship : [];
     const stypes=Array.isArray(master.api_mst_stype) ? master.api_mst_stype : [];
+    const shipgraphs=Array.isArray(master.api_mst_shipgraph) ? master.api_mst_shipgraph : [];
 
     if(ships.length<100) throw new Error("艦娘マスターデータが少なすぎます");
+
+    const shipgraphMap=new Map(
+      shipgraphs.map(x=>[Number(x.api_id),x])
+    );
 
     const stypeMap=new Map(
       stypes.map(x=>[Number(x.api_id),x.api_name||`艦種${x.api_id}`])
@@ -484,10 +476,15 @@ async function loadKancolleData(){
         if(yomi && yomi!==jp) aliases.push(yomi);
         if(fallback?.en) aliases.push(fallback.en);
 
+        const imageType=$("kancolleImageType")?.value || "banner";
+        const graph=shipgraphMap.get(id);
+        const fullUrl=kancolleFullImageUrl(id,graph?.api_filename);
+
         return {
           id:`kc:${id}`,
           mode:"kancolle",
           kcId:id,
+          kcFilename:graph?.api_filename||"",
           jp,
           en:fallback?.en||"",
           name:jp,
@@ -495,7 +492,8 @@ async function loadKancolleData(){
           aliases:[...new Set(aliases.filter(Boolean))],
           type,
           isBase:!remodelTargets.has(id),
-          imageUrl:`${currentKancolleImageBase()}/${id}.png`,
+          imageUrl:imageType==="full" ? fullUrl : `${currentKancolleImageBase()}/${id}.png`,
+          fallbackImageUrl:`${KANCOLLE_IMAGE_BASE_BANNER}/${id}.png`,
           source:KANCOLLE_SOURCE_URL,
           meta:`艦これ No.${id} ｜ ${type}`,
           desc:fallback?.en ? `${jp}（${fallback.en}）` : jp
@@ -506,7 +504,7 @@ async function loadKancolleData(){
 
     modeData.kancolle=list;
     cacheSet(cacheKey,list);
-    setStatus(`艦これ ${list.length}形態を読み込みました（${$("kancolleImageType")?.value === "card" ? "カード" : "バナー"}画像）`);
+    setStatus(`艦これ ${list.length}形態を読み込みました（${kancolleImageTypeLabel()}画像）`);
     return list;
 
   }catch(err){
@@ -529,152 +527,6 @@ async function loadKancolleData(){
     modeData.kancolle=fb;
     setStatus(`艦これ内蔵リスト ${fb.length}隻を使用（画像マスター取得に失敗）`);
     return fb;
-  }finally{
-    $("startBtn").disabled=false;
-    $("startBtn").textContent="クイズ開始";
-  }
-}
-
-
-function populateAzurLaneFilters(list){
-  const fill=(id,values)=>{
-    const el=$(id);
-    if(!el) return;
-    const old=el.value || "all";
-    while(el.options.length>1) el.remove(1);
-    for(const value of values){
-      const o=document.createElement("option");
-      o.value=value;
-      o.textContent=value;
-      el.appendChild(o);
-    }
-    if([...el.options].some(o=>o.value===old)) el.value=old;
-  };
-
-  const factions=[...new Set(list.map(x=>x.nationality).filter(Boolean))]
-    .sort((a,b)=>a.localeCompare(b,"ja"));
-  const hulls=[...new Set(list.map(x=>x.hullType).filter(Boolean))]
-    .sort((a,b)=>a.localeCompare(b,"ja"));
-  const rarityOrder=["Normal","Rare","Elite","Super Rare","Ultra Rare","Priority","Decisive"];
-  const rarities=[...new Set(list.map(x=>x.rarity).filter(Boolean))]
-    .sort((a,b)=>{
-      const ai=rarityOrder.indexOf(a),bi=rarityOrder.indexOf(b);
-      if(ai>=0 || bi>=0) return (ai<0?999:ai)-(bi<0?999:bi);
-      return a.localeCompare(b,"ja");
-    });
-
-  fill("azurFaction",factions);
-  fill("azurHullType",hulls);
-  fill("azurRarity",rarities);
-}
-
-function parseAzurLaneData(root){
-  const records=root && typeof root==="object" ? Object.values(root) : [];
-  const result=[];
-
-  for(const s of records){
-    if(!s || typeof s!=="object") continue;
-
-    const rawId=String(s.id||"").trim();
-    const en=String(s.names?.en||"").trim();
-    const jp=String(s.names?.jp||"").trim();
-    const code=String(s.names?.code||"").trim();
-
-    if(!rawId || (!jp && !en)) continue;
-
-    const displayName=jp || en;
-    const nationality=String(s.nationality||"Other").trim() || "Other";
-    const hullType=String(s.hullType||"Unknown").trim() || "Unknown";
-    const rarity=String(s.rarity||"Unknown").trim() || "Unknown";
-    const shipClass=String(s.class||"").trim();
-
-    const skins=Array.isArray(s.skins) ? s.skins : [];
-    const defaultSkin=skins.find(x=>String(x?.info?.obtainedFrom||"").toLowerCase()==="default") || skins[0];
-    const imageUrl=
-      defaultSkin?.images?.default ||
-      defaultSkin?.image ||
-      s.thumbnail ||
-      "";
-
-    if(!imageUrl) continue;
-
-    const aliases=[displayName,jp,en,code].filter(Boolean);
-
-    result.push({
-      id:`azur:${rawId}`,
-      mode:"azurlane",
-      azurId:rawId,
-      name:displayName,
-      displayName,
-      jp,
-      en,
-      codeName:code,
-      nationality,
-      hullType,
-      rarity,
-      shipClass,
-      aliases:[...new Set(aliases)],
-      imageUrl,
-      thumbnail:s.thumbnail||"",
-      source:s.wikiUrl || AZURLANE_SOURCE_URL,
-      meta:`アズールレーン ｜ ${nationality} ｜ ${hullType} ｜ ${rarity}${shipClass?` ｜ ${shipClass}級`:""}`,
-      desc:jp && en && jp!==en
-        ? `${jp}（${en}）`
-        : displayName
-    });
-  }
-
-  return result;
-}
-
-async function loadAzurLaneData(){
-  if(modeData.azurlane.length){
-    populateAzurLaneFilters(modeData.azurlane);
-    return modeData.azurlane;
-  }
-
-  const cached=cacheGet("militaryQuizV45:azurlane",7*24*3600*1000);
-  if(cached?.length){
-    modeData.azurlane=cached;
-    populateAzurLaneFilters(cached);
-    setStatus(`アズールレーン ${cached.length.toLocaleString()}キャラを使用可能`);
-    return cached;
-  }
-
-  setStatus("アズールレーンのキャラデータを読み込み中…（初回は少し時間がかかります）",true);
-  $("startBtn").textContent="読み込み中…";
-
-  try{
-    const controller=new AbortController();
-    const timer=setTimeout(()=>controller.abort(),60000);
-    const res=await fetch(AZURLANE_DATA_URL,{
-      signal:controller.signal,
-      cache:"force-cache"
-    });
-    clearTimeout(timer);
-
-    if(!res.ok) throw new Error(`Azur Lane data HTTP ${res.status}`);
-
-    const raw=await res.json();
-    const list=parseAzurLaneData(raw);
-
-    if(list.length<100){
-      throw new Error(`アズールレーンのキャラデータが少なすぎます（${list.length}件）`);
-    }
-
-    modeData.azurlane=list;
-    populateAzurLaneFilters(list);
-
-    // 元JSONは数MBあるため、ブラウザにはクイズ用に軽量化した配列だけ保存。
-    cacheSet("militaryQuizV45:azurlane",list);
-
-    setStatus(`アズールレーン ${list.length.toLocaleString()}キャラを読み込みました`);
-    return list;
-  }catch(err){
-    console.error("Azur Lane data load failed",err);
-    throw new Error(
-      "アズールレーンのキャラデータを取得できませんでした。少し待ってからもう一度お試しください。"
-    );
   }finally{
     $("startBtn").disabled=false;
     $("startBtn").textContent="クイズ開始";
@@ -1005,7 +857,6 @@ async function startQuiz(){
 
   try{
     if(currentMode==="kancolle") await loadKancolleData();
-    if(currentMode==="azurlane") await loadAzurLaneData();
     if(currentMode==="wows"){
       activePool = await loadWowsPoolForQuiz();
       await loadWowsHdImages();
@@ -1027,15 +878,6 @@ async function startQuiz(){
   }else if(currentMode==="kancolle"){
     const all=$("kancolleVariant").value==="all";
     activePool=modeData.kancolle.filter(s=>all||s.isBase);
-  }else if(currentMode==="azurlane"){
-    const faction=$("azurFaction")?.value || "all";
-    const hull=$("azurHullType")?.value || "all";
-    const rarity=$("azurRarity")?.value || "all";
-    activePool=modeData.azurlane.filter(s=>
-      (faction==="all"||s.nationality===faction) &&
-      (hull==="all"||s.hullType===hull) &&
-      (rarity==="all"||s.rarity===rarity)
-    );
   }else if(currentMode==="wows"){
     const nation=$("wowsNation").value;
     if(nation!=="all") activePool=activePool.filter(s=>s.nation===nation);
@@ -1051,20 +893,13 @@ async function startQuiz(){
   if(activePool.length<4 && currentAnswerMode==="choice"){
     alert("4択を作るには4件以上必要です。フィルターを広げてください。"); return;
   }
-  if(!activePool.length){
-    alert("このモードのデータが読み込めていません。必要なJSONファイルがGitHub上にあるか確認してください。");
-    return;
-  }
+  if(!activePool.length){ alert("この条件では問題がありません。"); return; }
 
   lastSettings={
     mode:currentMode,answer:currentAnswerMode,count:$("questionCount").value,
     timer:$("questionTimer")?.value || "30",
     era:$("eraFilter").value,country:$("countryFilter").value,
-    kc:$("kancolleVariant").value,kcImg:$("kancolleImageType")?.value || "banner",
-    azurFaction:$("azurFaction")?.value || "all",
-    azurHullType:$("azurHullType")?.value || "all",
-    azurRarity:$("azurRarity")?.value || "all",
-    wows:$("wowsNation").value,
+    kc:$("kancolleVariant").value,kcImg:$("kancolleImageType")?.value || "banner",wows:$("wowsNation").value,
     wowsQuality:$("wowsImageQuality")?.value || "standard",
     wtCategory:$("wtCategory")?.value || "all",
     gunCategory:$("gunCategory")?.value || "all",
@@ -1092,9 +927,6 @@ function restoreSettings(){
     $("kancolleImageType").value=lastSettings.kcImg;
     modeData.kancolle=[];
   }
-  if($("azurFaction") && lastSettings.azurFaction) $("azurFaction").value=lastSettings.azurFaction;
-  if($("azurHullType") && lastSettings.azurHullType) $("azurHullType").value=lastSettings.azurHullType;
-  if($("azurRarity") && lastSettings.azurRarity) $("azurRarity").value=lastSettings.azurRarity;
   $("wowsNation").value=lastSettings.wows;
   if($("wowsImageQuality") && lastSettings.wowsQuality){
     $("wowsImageQuality").value=lastSettings.wowsQuality;
@@ -1116,7 +948,6 @@ function currentItem(){
 function modeLabel(){
   if(currentMode==="real") return "⚓ 実在艦艇";
   if(currentMode==="kancolle") return "🌸 艦これキャラ";
-  if(currentMode==="azurlane") return "⚓ アズールレーン";
   if(currentMode==="wows") return "🎮 World of Warships";
   if(currentMode==="warthunder") return "🛡️ War Thunder";
   if(currentMode==="guns") return "🔫 現代銃";
@@ -1138,7 +969,6 @@ async function renderQuestion(){
   $("modeBadge").textContent=`${modeLabel()} ｜ ${currentAnswerMode==="text"?"文字入力":"4択"}`;
   $("questionText").textContent=
     currentMode==="kancolle" ? "この艦娘は誰でしょう？" :
-    currentMode==="azurlane" ? "このアズールレーンのキャラは誰でしょう？" :
     currentMode==="warthunder" ? "このWar Thunder兵器は何でしょう？" :
     currentMode==="guns" ? "この銃は何でしょう？" :
     "この艦艇は何でしょう？";
@@ -1149,7 +979,6 @@ async function renderQuestion(){
 
   if(textMode){
     if(currentMode==="kancolle") $("inputHint").textContent="日本語名・英字名のどちらでも正解になります";
-    else if(currentMode==="azurlane") $("inputHint").textContent="日本語名・英語名のどちらでも正解になります";
     else if(currentMode==="wows") $("inputHint").textContent="日本語名・英語名のどちらでも正解になります";
     else if(currentMode==="warthunder") $("inputHint").textContent="ゲーム内表記・英語名のどちらでも正解になります";
     else if(currentMode==="guns") $("inputHint").textContent="モデル名を入力してください（記号・空白の違いは無視します）";
@@ -1172,7 +1001,6 @@ async function renderQuestion(){
 function choiceLabel(s){
   if(s.mode==="real") return `${s.flag||""} ${s.displayName}`.trim();
   if(s.mode==="kancolle") return s.displayName;
-  if(s.mode==="azurlane") return s.displayName;
   if(s.mode==="wows") return `${s.displayName} 〔${s.nationLabel || s.nation}〕`;
   if(s.mode==="warthunder") return s.displayName;
   if(s.mode==="guns") return s.displayName;
@@ -1228,7 +1056,6 @@ function finishAnswer(ok,revealed=false,fromChoice=false,timedOut=false){
 function answerDisplay(item){
   if(item.mode==="real") return `${item.flag||""} ${item.name}`.trim();
   if(item.mode==="kancolle") return `${item.jp||item.name}${item.en?`（${item.en}）`:""}`;
-  if(item.mode==="azurlane") return `${item.jp||item.name}${item.en?`（${item.en}）`:""}`;
   return item.name;
 }
 async function nextQuestion(){
@@ -1245,7 +1072,7 @@ async function nextQuestion(){
 async function loadImage(item){
   const img=$("shipImage"),loading=$("loading"),fallback=$("imageFallback"),source=$("sourceLink");
   img.style.display="none";fallback.style.display="none";loading.style.display="block";source.style.display="none";img.removeAttribute("src");
-  img.classList.remove("wows-lowres","wows-medium","wows-hd","wt-image","gun-image","azurlane-image","kancolle-banner-crop","kancolle-card-image");
+  img.classList.remove("wows-lowres","wows-medium","wows-hd","wt-image","gun-image","kancolle-banner-crop","kancolle-card-image","kancolle-full-image");
   source.href=item.source||"#";
   try{
     let src="";
@@ -1256,9 +1083,6 @@ async function loadImage(item){
       source.href=data.content_urls?.desktop?.page||item.source||`https://en.wikipedia.org/wiki/${title}`;
     }else if(item.mode==="kancolle"){
       src=await kancolleImageUrl(item);
-    }else if(item.mode==="azurlane"){
-      src=item.imageUrl||item.thumbnail||"";
-      source.href=item.source||AZURLANE_SOURCE_URL;
     }else if(item.mode==="wows"){
       src=await wowsImageUrl(item);
     }else if(item.mode==="warthunder"){
@@ -1276,20 +1100,34 @@ async function loadImage(item){
       item.mode==="wows" &&
       src.includes("/wows_images/medium/");
 
-    const usingKancolleBanner =
-      item.mode==="kancolle" &&
-      (($("kancolleImageType")?.value || "banner")==="banner");
+    const kancolleImageType=$("kancolleImageType")?.value || "banner";
+    const usingKancolleBanner=item.mode==="kancolle" && kancolleImageType==="banner";
+    const usingKancolleFull=item.mode==="kancolle" && kancolleImageType==="full";
 
     img.classList.toggle("wows-lowres",item.mode==="wows" && !usingWowsHd && !usingWowsMedium);
     img.classList.toggle("wows-medium",usingWowsMedium);
     img.classList.toggle("wows-hd",usingWowsHd);
     img.classList.toggle("wt-image",item.mode==="warthunder");
     img.classList.toggle("gun-image",item.mode==="guns");
-    img.classList.toggle("azurlane-image",item.mode==="azurlane");
     img.classList.toggle("kancolle-banner-crop",usingKancolleBanner);
-    img.classList.toggle("kancolle-card-image",item.mode==="kancolle" && !usingKancolleBanner);
+    img.classList.toggle("kancolle-full-image",usingKancolleFull);
+    img.classList.toggle("kancolle-card-image",item.mode==="kancolle" && !usingKancolleBanner && !usingKancolleFull);
 
-    await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src=src;});
+    await new Promise((res,rej)=>{
+      let triedFallback=false;
+      img.onload=res;
+      img.onerror=()=>{
+        if(usingKancolleFull && !triedFallback && item.fallbackImageUrl){
+          triedFallback=true;
+          img.classList.remove("kancolle-full-image");
+          img.classList.add("kancolle-banner-crop");
+          img.src=item.fallbackImageUrl;
+          return;
+        }
+        rej(new Error("image load failed"));
+      };
+      img.src=src;
+    });
     img.style.display="block";source.style.display="block";
   }catch(err){
     console.warn("image failed",item,err);
@@ -1301,6 +1139,11 @@ async function loadImage(item){
 
 async function kancolleImageUrl(item){
   if(item.imageUrl) return item.imageUrl;
+
+  const mode=$("kancolleImageType")?.value || "banner";
+  if(mode==="full" && item.kcId && item.kcFilename){
+    return kancolleFullImageUrl(item.kcId,item.kcFilename);
+  }
   if(item.kcId) return `${currentKancolleImageBase()}/${item.kcId}.png`;
   return "";
 }
@@ -1340,9 +1183,5 @@ function showResult(){
 
 init().catch(err=>{
   console.error(err);
-  const btn=$("startBtn");
-  if(btn) btn.disabled=false;
-  const status=$("dataStatus");
-  if(status) status.textContent="初期化エラー：必要なファイルの配置を確認してください";
-  alert("アプリの初期化に失敗しました。index.html と app_v4_4.js、各JSONが同じ公開フォルダにあるか確認してください。");
+  alert("アプリの初期化に失敗しました。GitHub Pages または Live Server から起動してください。");
 });
