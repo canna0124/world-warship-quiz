@@ -11,9 +11,9 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / WOWS / WT / GUNS ・ v4.6</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS ・ v4.7</div>
         <h1>世界のミリタリー画像クイズ</h1>
-        <p>実在艦艇・艦これ・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
+        <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
       </div>
 
       <div class="panel settings">
@@ -22,6 +22,7 @@
           <select id="quizMode">
             <option value="real">⚓ 実在艦艇</option>
             <option value="kancolle">🌸 艦これキャラ</option>
+            <option value="azurlane">⚓ アズールレーン</option>
             <option value="wows">🎮 World of Warships</option>
             <option value="warthunder">🛡️ War Thunder（海軍以外）</option>
             <option value="guns">🔫 現代の銃</option>
@@ -94,6 +95,24 @@
           </label>
           <div class="info-box">
             高画質フルイラストでは艦これのフルサイズ立ち絵を表示します。読み込みに失敗した艦娘だけ自動でバナー画像へ切り替えます。バナーは拡大せずトリミングのみです。
+          </div>
+        </div>
+
+        <div id="azurlaneFilters" class="filter-grid hidden">
+          <label>
+            陣営
+            <select id="azurFaction">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <label>
+            艦種
+            <select id="azurHull">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <div class="info-box">
+            アズールレーンの最新キャラデータと高画質の通常立ち絵をオンライン取得します。日本語名・英語名の両方で回答できます。
           </div>
         </div>
 
@@ -237,6 +256,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_6.js"></script>
+  <script src="app_v4_7.js"></script>
 </body>
 </html>

@@ -280,3 +280,25 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:620px;
   }
 }
+
+
+/* v4.7 Azur Lane */
+.image-card img.azurlane-image{
+  width:100%;
+  height:min(72vh,760px);
+  max-width:100%;
+  max-height:760px;
+  object-fit:contain;
+  object-position:center center;
+  transform:none;
+  image-rendering:auto;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(89,195,255,.09),transparent 58%),
+    #02060a;
+}
+@media(max-width:650px){
+  .image-card img.azurlane-image{
+    height:58vh;
+    max-height:620px;
+  }
+}
