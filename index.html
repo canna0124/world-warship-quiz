@@ -11,9 +11,9 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS ・ v4.7</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.8</div>
         <h1>世界のミリタリー画像クイズ</h1>
-        <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃を、画像から当てよう。</p>
+        <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃・Minecraftブロックを、画像から当てよう。</p>
       </div>
 
       <div class="panel settings">
@@ -26,6 +26,7 @@
             <option value="wows">🎮 World of Warships</option>
             <option value="warthunder">🛡️ War Thunder（海軍以外）</option>
             <option value="guns">🔫 現代の銃</option>
+            <option value="minecraft">⛏️ Minecraft ブロックテクスチャ</option>
           </select>
         </label>
 
@@ -177,12 +178,24 @@
           </div>
         </div>
 
+        <div id="minecraftFilters" class="filter-grid hidden">
+          <label>
+            ブロックカテゴリ
+            <select id="minecraftCategory">
+              <option value="all" selected>すべて</option>
+            </select>
+          </label>
+          <div class="info-box">
+            Minecraft Java 26.1 のブロックテクスチャを使用します。元のピクセル感を保って拡大表示します。
+          </div>
+        </div>
+
         <div id="dataStatus" class="data-status">実在艦艇 74隻を使用</div>
         <button id="startBtn" class="primary">クイズ開始</button>
       </div>
 
       <div class="note">
-        画像は各モードの参照元からオンライン取得します。艦これ・WoWS・War Thunder等のゲーム画像・名称の権利は各権利者に帰属します。
+        画像は各モードの参照元からオンライン取得します。艦これ・WoWS・War Thunder・Minecraft等のゲーム画像・名称の権利は各権利者に帰属します。
       </div>
     </section>
 
@@ -256,6 +269,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_7.js"></script>
+  <script src="app_v4_8.js"></script>
 </body>
 </html>

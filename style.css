@@ -302,3 +302,26 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:620px;
   }
 }
+
+
+/* v4.8 Minecraft block texture quiz */
+.image-card img.minecraft-texture{
+  width:384px;
+  height:384px;
+  max-width:min(72vw,384px);
+  max-height:min(72vw,384px);
+  object-fit:fill;
+  image-rendering:pixelated;
+  image-rendering:crisp-edges;
+  background:#111;
+  border-radius:8px;
+  box-shadow:0 18px 50px rgba(0,0,0,.35);
+}
+@media(max-width:650px){
+  .image-card img.minecraft-texture{
+    width:280px;
+    height:280px;
+    max-width:76vw;
+    max-height:76vw;
+  }
+}
