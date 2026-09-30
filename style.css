@@ -508,3 +508,13 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     grid-template-columns:1fr;
   }
 }
+
+
+/* v4.13 KanColle equipment kana-answer support */
+.typing-reading-status{
+  text-align:center;
+  color:var(--accent2);
+  font-size:.88rem;
+  font-weight:900;
+  letter-spacing:.02em;
+}
