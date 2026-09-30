@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.9</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.10</div>
         <h1>世界のミリタリー画像クイズ</h1>
         <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃・Minecraftブロックを、画像から当てよう。</p>
       </div>
@@ -115,8 +115,16 @@
               <option value="all" selected>すべての装備</option>
             </select>
           </label>
+          <label>
+            装備画像
+            <select id="kancolleEquipmentImageType">
+              <option value="item_on" selected>名前なし：装備＋妖精（おすすめ）</option>
+              <option value="item_up">名前なし：装備単体</option>
+              <option value="card">カード（名前あり・確認用）</option>
+            </select>
+          </label>
           <div class="info-box">
-            艦これの装備図鑑で使われる「card」画像から出題します。問題画像には装備名を表示せず、回答後に名前と図鑑説明を表示します。
+            クイズでは名前が入っていない装備画像を使います。おすすめは「装備＋妖精」です。カード画像は確認用として残しています。
           </div>
         </div>
 
@@ -290,6 +298,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_9.js"></script>
+  <script src="app_v4_10.js"></script>
 </body>
 </html>
