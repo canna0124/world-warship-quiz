@@ -75,12 +75,17 @@ let equipmentTypingCombo = 0;
 let equipmentTypingBestCombo = 0;
 let equipmentTypingScore = 0;
 
-let japaneseReadingEnginePromise = null;
 let equipmentReadingCache = {};
-const EQUIPMENT_READING_CACHE_KEY = "militaryQuizV4141:equipmentReadings";
+const EQUIPMENT_READING_CACHE_KEY = "militaryQuizV4142:equipmentReadings";
 let equipmentReadingBgToken = 0;
 let equipmentReadingBgDone = 0;
 let equipmentReadingBgTotal = 0;
+
+let equipmentReadingWorker = null;
+let equipmentReadingWorkerUrl = "";
+let equipmentReadingWorkerSeq = 0;
+const equipmentReadingWorkerJobs = new Map();
+const equipmentReadingInflight = new Map();
 
 const $ = id => document.getElementById(id);
 const screens = ["home","quiz","result"];
@@ -246,32 +251,125 @@ function saveEquipmentReadingCache(){
   }catch{}
 }
 
-async function ensureJapaneseReadingEngine(){
-  if(japaneseReadingEnginePromise) return japaneseReadingEnginePromise;
+function ensureEquipmentReadingWorker(){
+  if(equipmentReadingWorker) return equipmentReadingWorker;
 
-  japaneseReadingEnginePromise=(async()=>{
-    const [kuroshiroModule,analyzerModule]=await Promise.all([
-      import("https://esm.sh/kuroshiro@1.2.0"),
-      import("https://esm.sh/kuroshiro-analyzer-kuromoji@1.1.0")
-    ]);
+  const source = `
+    let enginePromise = null;
 
-    const Kuroshiro=kuroshiroModule.default;
-    const KuromojiAnalyzer=analyzerModule.default;
+    async function getEngine(){
+      if(enginePromise) return enginePromise;
 
-    const engine=new Kuroshiro();
-    await engine.init(new KuromojiAnalyzer({
-      dictPath:"https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/"
-    }));
-    return engine;
-  })();
+      enginePromise = (async()=>{
+        const [kuroshiroModule, analyzerModule] = await Promise.all([
+          import("https://esm.sh/kuroshiro@1.2.0"),
+          import("https://esm.sh/kuroshiro-analyzer-kuromoji@1.1.0")
+        ]);
 
-  try{
-    return await japaneseReadingEnginePromise;
-  }catch(err){
-    console.warn("Japanese reading engine failed",err);
-    japaneseReadingEnginePromise=null;
-    throw err;
-  }
+        const Kuroshiro = kuroshiroModule.default;
+        const KuromojiAnalyzer = analyzerModule.default;
+
+        const engine = new Kuroshiro();
+        await engine.init(new KuromojiAnalyzer({
+          dictPath: "https://cdn.jsdelivr.net/npm/kuromoji@0.1.2/dict/"
+        }));
+        return engine;
+      })();
+
+      try{
+        return await enginePromise;
+      }catch(err){
+        enginePromise = null;
+        throw err;
+      }
+    }
+
+    self.onmessage = async (event)=>{
+      const msg = event.data || {};
+      if(msg.type !== "convert") return;
+
+      try{
+        const engine = await getEngine();
+        const reading = await engine.convert(String(msg.text || ""), {
+          to: "hiragana",
+          mode: "normal"
+        });
+        self.postMessage({
+          type: "result",
+          id: msg.id,
+          reading: String(reading || "").trim()
+        });
+      }catch(err){
+        self.postMessage({
+          type: "error",
+          id: msg.id,
+          message: err && err.message ? err.message : String(err)
+        });
+      }
+    };
+  `;
+
+  equipmentReadingWorkerUrl = URL.createObjectURL(
+    new Blob([source], {type:"text/javascript"})
+  );
+
+  equipmentReadingWorker = new Worker(equipmentReadingWorkerUrl, {
+    type:"module",
+    name:"kancolle-equipment-reading"
+  });
+
+  equipmentReadingWorker.onmessage = (event)=>{
+    const msg = event.data || {};
+    const job = equipmentReadingWorkerJobs.get(msg.id);
+    if(!job) return;
+
+    equipmentReadingWorkerJobs.delete(msg.id);
+    clearTimeout(job.timeout);
+
+    if(msg.type === "result"){
+      job.resolve(msg.reading || "");
+    }else{
+      job.reject(new Error(msg.message || "読み仮名変換に失敗しました"));
+    }
+  };
+
+  equipmentReadingWorker.onerror = (event)=>{
+    console.warn("Equipment reading worker error", event);
+    for(const [,job] of equipmentReadingWorkerJobs){
+      clearTimeout(job.timeout);
+      job.reject(new Error("読み仮名Workerでエラーが発生しました"));
+    }
+    equipmentReadingWorkerJobs.clear();
+
+    try{ equipmentReadingWorker.terminate(); }catch{}
+    equipmentReadingWorker = null;
+
+    if(equipmentReadingWorkerUrl){
+      try{ URL.revokeObjectURL(equipmentReadingWorkerUrl); }catch{}
+      equipmentReadingWorkerUrl = "";
+    }
+  };
+
+  return equipmentReadingWorker;
+}
+
+function convertEquipmentReadingInWorker(text){
+  const worker = ensureEquipmentReadingWorker();
+  const id = ++equipmentReadingWorkerSeq;
+
+  return new Promise((resolve,reject)=>{
+    const timeout = setTimeout(()=>{
+      equipmentReadingWorkerJobs.delete(id);
+      reject(new Error("読み仮名変換がタイムアウトしました"));
+    },90000);
+
+    equipmentReadingWorkerJobs.set(id,{resolve,reject,timeout});
+    worker.postMessage({
+      type:"convert",
+      id,
+      text:String(text || "")
+    });
+  });
 }
 
 async function ensureEquipmentReading(item){
@@ -291,27 +389,34 @@ async function ensureEquipmentReading(item){
     return item.readingHiragana;
   }
 
-  try{
-    const engine=await ensureJapaneseReadingEngine();
-    const reading=await engine.convert(item.name||"",{
-      to:"hiragana",
-      mode:"normal"
-    });
-
-    const clean=String(reading||"").trim();
-    if(clean){
-      item.readingHiragana=clean;
-      if(!item.aliases) item.aliases=[];
-      if(!item.aliases.includes(clean)) item.aliases.push(clean);
-      equipmentReadingCache[key]=clean;
-      saveEquipmentReadingCache();
-      return clean;
-    }
-  }catch(err){
-    console.warn("equipment reading conversion failed",item?.name,err);
+  if(equipmentReadingInflight.has(key)){
+    return equipmentReadingInflight.get(key);
   }
 
-  return "";
+  const task=(async()=>{
+    try{
+      const reading=await convertEquipmentReadingInWorker(item.name||"");
+      const clean=String(reading||"").trim();
+
+      if(clean){
+        item.readingHiragana=clean;
+        if(!item.aliases) item.aliases=[];
+        if(!item.aliases.includes(clean)) item.aliases.push(clean);
+        equipmentReadingCache[key]=clean;
+        saveEquipmentReadingCache();
+        return clean;
+      }
+    }catch(err){
+      console.warn("equipment reading conversion failed",item?.name,err);
+    }finally{
+      equipmentReadingInflight.delete(key);
+    }
+
+    return "";
+  })();
+
+  equipmentReadingInflight.set(key,task);
+  return task;
 }
 
 function acceptedEquipmentTypingAnswer(input,item){
@@ -355,7 +460,6 @@ function startEquipmentReadingBackground(pool){
   // 起動を待たせない。ユーザーがクイズを開始した後に完全非同期で始める。
   setTimeout(async()=>{
     try{
-      await ensureJapaneseReadingEngine();
       if(token!==equipmentReadingBgToken) return;
 
       for(const item of items){
@@ -366,7 +470,7 @@ function startEquipmentReadingBackground(pool){
         updateEquipmentReadingNotice("working");
 
         // UIが固まらないよう少し休ませる。
-        await new Promise(resolve=>setTimeout(resolve,25));
+        await new Promise(resolve=>setTimeout(resolve,80));
       }
 
       if(token===equipmentReadingBgToken){
@@ -1624,9 +1728,7 @@ async function startQuiz(){
     activePool=modeData.minecraft.filter(s=>cat==="all"||s.category===cat);
   }
 
-  if(equipmentTypingEnabled()){
-    startEquipmentReadingBackground(activePool);
-  }else{
+  if(!equipmentTypingEnabled()){
     ++equipmentReadingBgToken;
   }
 
@@ -1658,6 +1760,15 @@ async function startQuiz(){
   currentIndex=0;correctCount=0;
   if(endless) endlessQueue=shuffled(activePool);
   else questions=buildNoRepeat(activePool,selectedCount);
+
+  if(equipmentTypingEnabled()){
+    const first=currentItem();
+    const ordered=[
+      ...(first ? [first] : []),
+      ...activePool.filter(x=>!first || x.id!==first.id)
+    ];
+    startEquipmentReadingBackground(ordered);
+  }
 
   startTotalTimer();
   showScreen("quiz");
