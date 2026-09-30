@@ -325,3 +325,25 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:76vw;
   }
 }
+
+
+/* v4.9 KanColle equipment encyclopedia-card quiz */
+.image-card img.kancolle-equipment-image{
+  width:auto;
+  height:auto;
+  max-width:min(88%,620px);
+  max-height:620px;
+  object-fit:contain;
+  object-position:center center;
+  transform:none;
+  image-rendering:auto;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(142,230,255,.10),transparent 58%),
+    #02060a;
+}
+@media(max-width:650px){
+  .image-card img.kancolle-equipment-image{
+    max-width:96%;
+    max-height:500px;
+  }
+}

@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.8</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.9</div>
         <h1>世界のミリタリー画像クイズ</h1>
         <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃・Minecraftブロックを、画像から当てよう。</p>
       </div>
@@ -22,6 +22,7 @@
           <select id="quizMode">
             <option value="real">⚓ 実在艦艇</option>
             <option value="kancolle">🌸 艦これキャラ</option>
+            <option value="kancolle_equipment">🧰 艦これ装備</option>
             <option value="azurlane">⚓ アズールレーン</option>
             <option value="wows">🎮 World of Warships</option>
             <option value="warthunder">🛡️ War Thunder（海軍以外）</option>
@@ -80,6 +81,14 @@
 
         <div id="kancolleFilters" class="filter-grid hidden">
           <label>
+            出題対象
+            <select id="kancolleTarget">
+              <option value="kanmusu" selected>艦娘 only</option>
+              <option value="abyssal">深海棲艦 only</option>
+              <option value="both">艦娘＋深海棲艦</option>
+            </select>
+          </label>
+          <label>
             艦娘の範囲
             <select id="kancolleVariant">
               <option value="base" selected>基本形態中心</option>
@@ -95,7 +104,19 @@
             </select>
           </label>
           <div class="info-box">
-            高画質フルイラストでは艦これのフルサイズ立ち絵を表示します。読み込みに失敗した艦娘だけ自動でバナー画像へ切り替えます。バナーは拡大せずトリミングのみです。
+            深海棲艦はID 1501以降の敵艦データを使用します。「艦娘＋深海棲艦」では両方からランダム出題します。艦娘の範囲設定は艦娘側だけに適用されます。
+          </div>
+        </div>
+
+        <div id="kancolleEquipmentFilters" class="filter-grid hidden">
+          <label>
+            装備カテゴリ
+            <select id="kancolleEquipmentCategory">
+              <option value="all" selected>すべての装備</option>
+            </select>
+          </label>
+          <div class="info-box">
+            艦これの装備図鑑で使われる「card」画像から出題します。問題画像には装備名を表示せず、回答後に名前と図鑑説明を表示します。
           </div>
         </div>
 
@@ -269,6 +290,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_8.js"></script>
+  <script src="app_v4_9.js"></script>
 </body>
 </html>
