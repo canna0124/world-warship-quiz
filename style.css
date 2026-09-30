@@ -347,3 +347,164 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
     max-height:500px;
   }
 }
+
+
+/* v4.12 KanColle equipment typing rush */
+.typing-arena{
+  display:grid;
+  gap:14px;
+  margin-bottom:22px;
+}
+.typing-hud{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+}
+.typing-hud span{
+  min-width:110px;
+  padding:9px 13px;
+  text-align:center;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(20,43,69,.82);
+  color:var(--muted);
+  font-weight:800;
+}
+.typing-hud strong{
+  color:var(--accent2);
+  font-size:1.1rem;
+}
+.typing-lane{
+  position:relative;
+  height:310px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:
+    linear-gradient(90deg,rgba(255,107,122,.12) 0 7%,transparent 7% 100%),
+    radial-gradient(circle at 70% 45%,rgba(89,195,255,.08),transparent 42%),
+    #03070c;
+}
+.typing-lane::before{
+  content:"";
+  position:absolute;
+  left:7%;
+  top:0;
+  bottom:0;
+  width:2px;
+  background:rgba(255,107,122,.72);
+  box-shadow:0 0 16px rgba(255,107,122,.45);
+}
+.typing-goal{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%) rotate(-90deg);
+  color:rgba(255,255,255,.42);
+  font-size:.7rem;
+  font-weight:1000;
+  letter-spacing:.18em;
+}
+.typing-runner{
+  position:absolute;
+  top:50%;
+  left:100%;
+  width:240px;
+  min-height:220px;
+  transform:translateY(-50%);
+  display:grid;
+  place-items:center;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:16px;
+  background:rgba(9,23,37,.94);
+  box-shadow:0 18px 45px rgba(0,0,0,.38);
+}
+.typing-runner.typing-running{
+  animation-name:equipmentTypingFlow;
+  animation-timing-function:linear;
+  animation-fill-mode:forwards;
+}
+.typing-runner img{
+  display:none;
+  width:210px;
+  height:210px;
+  max-width:100%;
+  object-fit:contain;
+  image-rendering:auto;
+}
+@keyframes equipmentTypingFlow{
+  from{left:100%}
+  to{left:-250px}
+}
+.typing-loading,
+.typing-image-fallback{
+  color:var(--muted);
+  font-weight:800;
+  text-align:center;
+}
+.typing-answer-form{
+  max-width:720px;
+  width:100%;
+  margin:auto;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+}
+#typingAnswer{
+  font-size:1.12rem;
+  padding:16px;
+  text-align:center;
+}
+#typingAnswer.typing-wrong{
+  animation:typingWrongShake .24s linear 1;
+  border-color:var(--bad);
+}
+@keyframes typingWrongShake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-7px)}
+  75%{transform:translateX(7px)}
+}
+.typing-flash{
+  width:max-content;
+  max-width:100%;
+  margin:auto;
+  padding:9px 15px;
+  border-radius:999px;
+  font-weight:1000;
+  text-align:center;
+}
+.typing-flash.ok{
+  color:var(--ok);
+  border:1px solid rgba(87,214,141,.5);
+  background:rgba(87,214,141,.10);
+}
+.typing-flash.miss{
+  color:var(--bad);
+  border:1px solid rgba(255,107,122,.5);
+  background:rgba(255,107,122,.10);
+}
+.typing-help{
+  color:var(--muted);
+  text-align:center;
+  font-size:.85rem;
+}
+@media(max-width:650px){
+  .typing-lane{height:250px}
+  .typing-runner{
+    width:190px;
+    min-height:180px;
+  }
+  .typing-runner img{
+    width:165px;
+    height:165px;
+  }
+  @keyframes equipmentTypingFlow{
+    from{left:100%}
+    to{left:-200px}
+  }
+  .typing-answer-form{
+    grid-template-columns:1fr;
+  }
+}

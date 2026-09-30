@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.11</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.12</div>
         <h1>世界のミリタリー画像クイズ</h1>
         <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃・Minecraftブロックを、画像から当てよう。</p>
       </div>
@@ -123,8 +123,24 @@
               <option value="card">カード（名前あり・確認用）</option>
             </select>
           </label>
+          <label>
+            出題スタイル
+            <select id="kancolleEquipmentPlayStyle">
+              <option value="normal" selected>通常クイズ</option>
+              <option value="typing">タイピングラッシュ（寿司打風）</option>
+            </select>
+          </label>
+          <label>
+            タイピング速度
+            <select id="kancolleEquipmentTypingSpeed">
+              <option value="14">ゆっくり</option>
+              <option value="10" selected>普通</option>
+              <option value="7">速い</option>
+              <option value="5">鬼</option>
+            </select>
+          </label>
           <div class="info-box">
-            「装備＋妖精」「装備単体」は名前なし画像を直接読み込みます。カードは名前入りの確認用です。
+            タイピングラッシュでは装備画像が右から左へ流れます。画像が画面外へ行く前に装備名を入力して Enter。装備＋妖精・装備単体・カードのどれでも遊べます。
           </div>
         </div>
 
@@ -250,14 +266,40 @@
         </div>
       </div>
 
-      <div class="image-card">
+      <div id="typingArena" class="typing-arena hidden">
+        <div class="typing-hud">
+          <span>スコア <strong id="typingScore">0</strong></span>
+          <span>コンボ <strong id="typingCombo">0</strong></span>
+          <span>最高 <strong id="typingBestCombo">0</strong></span>
+        </div>
+
+        <div class="typing-lane">
+          <div id="equipmentTypingRunner" class="typing-runner">
+            <div id="typingLoading" class="typing-loading">画像を読み込み中…</div>
+            <img id="typingEquipmentImage" alt="艦これ装備タイピング画像" referrerpolicy="no-referrer">
+            <div id="typingImageFallback" class="typing-image-fallback hidden">画像を取得できませんでした</div>
+          </div>
+          <div class="typing-goal">GOAL</div>
+        </div>
+
+        <div id="typingFlash" class="typing-flash hidden"></div>
+
+        <form id="typingAnswerForm" class="typing-answer-form">
+          <input id="typingAnswer" type="text" autocomplete="off" spellcheck="false"
+                 placeholder="装備名を入力して Enter">
+          <button type="submit" class="primary">ENTER</button>
+        </form>
+        <div class="typing-help">画像が左端に着く前に入力！ 間違えても時間内なら再入力できます。</div>
+      </div>
+
+      <div id="imageCard" class="image-card">
         <div id="loading" class="loading">画像を読み込み中…</div>
         <img id="shipImage" alt="クイズ画像" referrerpolicy="no-referrer">
         <div id="imageFallback" class="fallback">画像を取得できませんでした</div>
         <a id="sourceLink" target="_blank" rel="noopener noreferrer">画像・出典</a>
       </div>
 
-      <div class="question-box">
+      <div id="questionBox" class="question-box">
         <div id="questionText" class="question-kicker">これは何でしょう？</div>
         <div id="choices" class="choices"></div>
 
@@ -298,6 +340,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_11.js"></script>
+  <script src="app_v4_12.js"></script>
 </body>
 </html>
