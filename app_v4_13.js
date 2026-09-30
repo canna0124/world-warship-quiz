@@ -77,7 +77,10 @@ let equipmentTypingScore = 0;
 
 let japaneseReadingEnginePromise = null;
 let equipmentReadingCache = {};
-const EQUIPMENT_READING_CACHE_KEY = "militaryQuizV413:equipmentReadings";
+const EQUIPMENT_READING_CACHE_KEY = "militaryQuizV4141:equipmentReadings";
+let equipmentReadingBgToken = 0;
+let equipmentReadingBgDone = 0;
+let equipmentReadingBgTotal = 0;
 
 const $ = id => document.getElementById(id);
 const screens = ["home","quiz","result"];
@@ -325,6 +328,59 @@ function acceptedEquipmentTypingAnswer(input,item){
   return aliases.some(a=>normalizeKanaAnswer(a)===n);
 }
 
+function updateEquipmentReadingNotice(state="working"){
+  const top=$("equipmentReadingNoticeStatus");
+  const inQuiz=$("typingReadingStatus");
+
+  let text="読み仮名：バックグラウンド準備中";
+  if(state==="ready"){
+    text="読み仮名：準備完了";
+  }else if(state==="error"){
+    text="読み仮名：準備失敗（正式名称はそのまま使えます）";
+  }else if(equipmentReadingBgTotal>0){
+    text=`読み仮名：バックグラウンド準備中 ${equipmentReadingBgDone}/${equipmentReadingBgTotal}`;
+  }
+
+  if(top) top.textContent=text;
+  if(inQuiz) inQuiz.textContent=text;
+}
+
+function startEquipmentReadingBackground(pool){
+  const token=++equipmentReadingBgToken;
+  const items=Array.isArray(pool) ? [...pool] : [];
+  equipmentReadingBgDone=0;
+  equipmentReadingBgTotal=items.length;
+  updateEquipmentReadingNotice("working");
+
+  // 起動を待たせない。ユーザーがクイズを開始した後に完全非同期で始める。
+  setTimeout(async()=>{
+    try{
+      await ensureJapaneseReadingEngine();
+      if(token!==equipmentReadingBgToken) return;
+
+      for(const item of items){
+        if(token!==equipmentReadingBgToken) return;
+
+        await ensureEquipmentReading(item);
+        equipmentReadingBgDone++;
+        updateEquipmentReadingNotice("working");
+
+        // UIが固まらないよう少し休ませる。
+        await new Promise(resolve=>setTimeout(resolve,25));
+      }
+
+      if(token===equipmentReadingBgToken){
+        updateEquipmentReadingNotice("ready");
+      }
+    }catch(err){
+      console.warn("Background reading preparation failed",err);
+      if(token===equipmentReadingBgToken){
+        updateEquipmentReadingNotice("error");
+      }
+    }
+  },0);
+}
+
 function equipmentTypingEnabled(){
   return currentMode==="kancolle_equipment" &&
          ($("kancolleEquipmentPlayStyle")?.value || "normal")==="typing";
@@ -388,12 +444,17 @@ async function renderEquipmentTypingQuestion(){
   const item=currentItem();
 
   if($("typingReadingStatus")){
-    $("typingReadingStatus").textContent="読み仮名を準備中…";
     $("typingReadingStatus").classList.remove("hidden");
+    updateEquipmentReadingNotice(
+      equipmentReadingBgDone>=equipmentReadingBgTotal && equipmentReadingBgTotal>0
+        ? "ready"
+        : "working"
+    );
   }
-  await ensureEquipmentReading(item);
-  if($("typingReadingStatus")){
-    $("typingReadingStatus").textContent="漢字・ひらがな・カタカナOK";
+
+  // 現在の装備も待たずに読みを準備。
+  if(!item.readingHiragana){
+    ensureEquipmentReading(item).catch(()=>{});
   }
 
   $("progress").textContent=`${currentIndex+1} / ${endless?"∞":selectedCount}`;
@@ -1564,16 +1625,9 @@ async function startQuiz(){
   }
 
   if(equipmentTypingEnabled()){
-    $("startBtn").disabled=true;
-    $("startBtn").textContent="読み仮名を準備中…";
-    try{
-      await ensureJapaneseReadingEngine();
-    }catch(err){
-      console.warn("Reading engine preload failed; formal-name input remains available.",err);
-    }finally{
-      $("startBtn").disabled=false;
-      $("startBtn").textContent="クイズ開始";
-    }
+    startEquipmentReadingBackground(activePool);
+  }else{
+    ++equipmentReadingBgToken;
   }
 
   if(activePool.length<4 && currentAnswerMode==="choice" && !equipmentTypingEnabled()){
