@@ -518,3 +518,25 @@ input:focus,select:focus{outline:2px solid rgba(89,195,255,.45);border-color:var
   font-weight:900;
   letter-spacing:.02em;
 }
+
+
+/* v4.14 kana background-preparation notice */
+.equipment-reading-notice{
+  grid-column:1 / -1;
+  padding:14px 16px;
+  border:1px solid rgba(255,196,87,.40);
+  border-radius:14px;
+  background:rgba(255,196,87,.08);
+  color:var(--muted);
+  line-height:1.75;
+}
+.equipment-reading-notice-title{
+  margin-bottom:5px;
+  color:#ffd36a;
+  font-weight:1000;
+}
+.equipment-reading-notice-status{
+  margin-top:8px;
+  color:var(--accent2);
+  font-weight:900;
+}

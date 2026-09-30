@@ -11,7 +11,7 @@
   <main class="app-shell">
     <section id="home" class="screen active">
       <div class="hero">
-        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.13</div>
+        <div class="eyebrow">WARSHIP / KANCOLLE / AZUR LANE / WOWS / WT / GUNS / MINECRAFT ・ v4.14</div>
         <h1>世界のミリタリー画像クイズ</h1>
         <p>実在艦艇・艦これ・アズールレーン・WoWS・War Thunder・現代銃・Minecraftブロックを、画像から当てよう。</p>
       </div>
@@ -141,6 +141,14 @@
           </label>
           <div class="info-box">
             タイピングラッシュでは装備画像が右から左へ流れます。画像が画面外へ行く前に装備名を入力して Enter。装備＋妖精・装備単体・カードのどれでも遊べます。
+          </div>
+
+          <div class="equipment-reading-notice">
+            <div class="equipment-reading-notice-title">⚠ 読み仮名入力について</div>
+            <div>・「読み仮名を準備中…」で待たされず、そのまま開始できます。</div>
+            <div>・正式名称は開始直後からすぐ正解判定できます。</div>
+            <div>・ひらがな / カタカナはバックグラウンドで順次有効になります。</div>
+            <div id="equipmentReadingNoticeStatus" class="equipment-reading-notice-status">読み仮名：未準備</div>
           </div>
         </div>
 
@@ -289,7 +297,7 @@
                  placeholder="漢字・ひらがな・カタカナで入力して Enter">
           <button type="submit" class="primary">ENTER</button>
         </form>
-        <div id="typingReadingStatus" class="typing-reading-status">漢字・ひらがな・カタカナOK</div>
+        <div id="typingReadingStatus" class="typing-reading-status">読み仮名：バックグラウンド準備中</div>
         <div class="typing-help">画像が左端に着く前に入力！ 間違えても時間内なら再入力できます。</div>
       </div>
 
@@ -341,6 +349,6 @@
       </div>
     </section>
   </main>
-  <script src="app_v4_13.js"></script>
+  <script src="app_v4_14.js"></script>
 </body>
 </html>
